@@ -9,6 +9,8 @@
 #import "LMRateFieldCell.h"
 #import "EXPRateViewController.h"
 
+#define RATE_DECIMAL_LENGTH_MAX 2
+
 @implementation LMRateFieldCell{
     
     //标记开始输入小数
@@ -90,6 +92,8 @@
 }
 
 
+#pragma mark - private
+
 ////////////private////////////
 -(void) buildViews
 {
@@ -113,7 +117,7 @@
 		self.numberFormatter.maximumFractionDigits = 2;
 	}
 	
-	self.detailTextLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:numberValue]];
+	self.detailTextLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:numberValue]];
     
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setCurrency)];
@@ -131,6 +135,8 @@
     [self.parent.navigationController pushViewController:rate animated:YES];
 }
 
+#pragma mark -
+#pragma mark ui input
 
 - (BOOL)hasText {
 	return YES;
@@ -159,9 +165,9 @@
             if(dotBeginFlag && !endFlag && dotnumber !=0){
                 NSUInteger addedValues = [theText integerValue];
                 dotnumber--;
-                self.numberValue += addedValues * powf(0.1,  (2-dotnumber));
+                self.numberValue += addedValues * powf(0.1,  (RATE_DECIMAL_LENGTH_MAX-dotnumber));
                 
-                self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:self.numberValue]];
+                self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
                 if(dotnumber ==0){
                     endFlag = YES;
                 }
@@ -185,7 +191,7 @@
 			} else if (self.numberValue > self.upperLimit) {
 				self.numberValue = self.upperLimit;
 			}
-			self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithInteger:self.numberValue]];
+			self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
             //            NSLog(@"text is %@,value is %d text length is %d",self.amount.text,self.numberValue,self.amount.text.length);
 			valueChanged = YES;
 		}
@@ -193,6 +199,56 @@
     
 }
 
+
+// 退格
+- (void)deleteBackward {
+
+    
+    if(firstInput){
+        firstInput = NO;
+        self.numberValue = 0.0f;
+        self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
+        return;
+    }
+    
+    if(endFlag || dotBeginFlag){
+        // 删除小数
+        dotnumber ++;
+        endFlag = NO;
+        if (dotnumber == RATE_DECIMAL_LENGTH_MAX ) {
+            dotBeginFlag = NO;
+        }
+        self.numberValue = self.numberValue*pow(10, RATE_DECIMAL_LENGTH_MAX-dotnumber);       // 小数点左移 RATE_DECIMAL_LENGTH_MAX-dotnumber
+        //return;
+    }
+    else {
+        // 删除整数
+        self.numberValue = self.numberValue / 10;
+        
+    }
+    
+    double tempIntPart ;
+    
+    modf(self.numberValue,&tempIntPart);
+    self.numberValue = tempIntPart;
+    self.numberValue = self.numberValue*pow(0.1, RATE_DECIMAL_LENGTH_MAX-dotnumber);      // 小数点右移 RATE_DECIMAL_LENGTH_MAX－dotnumber
+    
+    if (self.numberValue < self.lowerLimit) {
+        self.numberValue = self.lowerLimit;
+    } else if (self.numberValue > self.upperLimit) {
+        self.numberValue = self.upperLimit;
+    }
+    self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
+    
+    valueChanged = YES;
+    
+    
+}
+
+
+/***********************************
+    ***** del by wxc 15.2.2 for  无法删除小数
+ 
 - (void)deleteBackward {
     if(endFlag || dotBeginFlag){
         return;
@@ -215,5 +271,5 @@
     
 	valueChanged = YES;
 }
-
+ *********/
 @end

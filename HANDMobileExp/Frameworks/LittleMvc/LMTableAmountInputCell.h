@@ -39,8 +39,10 @@
     
 }
 
-@property (nonatomic, assign) float numberValue;
-@property (nonatomic, assign) float lowerLimit;
+
+
+@property (nonatomic, assign) double numberValue;
+@property (nonatomic, assign) double lowerLimit;
 @property (nonatomic, assign) NSUInteger upperLimit;
 @property (nonatomic, strong) NSNumberFormatter *numberFormatter;
 @property (nonatomic,strong)  id<IntegerInputTableViewCellDelegate> delegate;

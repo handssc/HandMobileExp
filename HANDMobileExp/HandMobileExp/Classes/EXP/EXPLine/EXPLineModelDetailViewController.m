@@ -24,15 +24,15 @@
     EXPLineDetailModel * model;
     EXPLineDetailHtppModel * httpmdel;
     
-    //cell
-    LMTableDateFromToCell *dateCell;
+    //cell 表单元
+    LMTableDateFromToCell *dateCell;                // 日期
     
-    LMTableAmountInputCell *amountCell;
-    LMTablePickerInputCell *expenseTypeCell;
-    LMTablePickerInputCell *placeCell;
-    LMTableTextInputCell *numberCell;
+    LMTableAmountInputCell *amountCell;             // 金额
+    LMTablePickerInputCell *expenseTypeCell;        // 费用类型
+    LMTablePickerInputCell *placeCell;              // 地点
+    LMTableTextInputCell *numberCell;               // 数量
     
-    LMRateFieldCell  * rateCell;
+    LMRateFieldCell  * rateCell;                    // 费率
     
     NSMutableArray * imgArray;
     
@@ -63,7 +63,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     if (self) {
         //初始代理
         LocationPicker = [[EXPLocationPicker alloc] init];
-        LocationPicker.provinces =[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ProvincesAndCities.plist" ofType:nil]];
+        LocationPicker.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ProvincesAndCities.plist" ofType:nil]];
         LocationPicker.citys =[[LocationPicker.provinces objectAtIndex:0] objectForKey:@"Cities"];
         
         NSArray * expense_classes =  [[NSUserDefaults standardUserDefaults] valueForKey:@"expense_classes"];
@@ -87,75 +87,26 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 - (void)viewDidLoad
 {
     
-    
-    
     //初始化tableview
     [super viewDidLoad];
+    
+    
     if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
- //   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"报销单创建" style:UIBarButtonSystemItemDone target:self action:@selector(back)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(back)];
+    
+    
+    // Navigation
+    [self createUI_Navigation];
 
-
-
+    // 常规表项
+    [self createUI_TableCommon];
     
-    self.navigationItem.title = @"记一单";
-    self.tv = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
-    self.tv.dataSource = self;
-    self.tv.delegate = self;
+    // 备注
+    [self createUI_TableRemarks];
     
-    self.tv.tableFooterView = [[UIView alloc]init];
-    
-//    self.view.backgroundColor = [UIColor colorWithRed:0.876 green:0.874 blue:0.760 alpha:1.000];
-    self.tv.scrollEnabled = NO;
-
-    
-    
-
-//    self.tv.backgroundColor = [UIColor colorWithRed:0.876 green:0.874 blue:0.760 alpha:0.310];
-    self.tv.backgroundView.backgroundColor = nil;
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
-    [self.view addSubview:self.tv];
-    
-//    UIView * div2 =[UIView new];
-//    div2.frame = CGRectMake(self.view.frame.size.width/2-10 , 80 ,
-//                              1.0f, 40.0f);
-//    div2.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
-//    [self.view addSubview:div2];
-
-    UILabel * lb3 = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2)-10, 263.0f, 30, 30)];
-    lb3.text = @"备注";
-    lb3.font =   [lb3.font fontWithSize:22];
-//    lb3.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:24];
-    lb3.adjustsFontSizeToFitWidth = YES;
-    [self.view addSubview:lb3];
-    
-    self.descTx = [[UITextView alloc] initWithFrame:CGRectMake(8.0, 293, self.view.bounds.size.width-16.0, (self.view.bounds.size.height-240)*0.25)];
-    self.descTx.delegate = self;
-    self.descTx.layer.borderColor =  [UIColor grayColor].CGColor;
-    
-    self.descTx.layer.borderWidth = 1.0;
-//    self.descTx.backgroundColor = [UIColor colorWithRed:0.969 green:0.969 blue:0.843 alpha:1.000];
-    [self.view addSubview:self.descTx];
-    
-    self.descTx.tag = 1;
-    
-    
-    //添加按键
-    self.save = [[UIButton alloc] initWithFrame:CGRectMake(8, self.descTx.frame.origin.y+self.descTx.frame.size.height+15, 320-16, (self.view.bounds.size.height-240)*0.15)];
-    
-    [self.save setTitle:@"保存" forState: UIControlStateNormal];
-    [self.save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchDown];
-    [self.save setBackgroundColor:[UIColor colorWithRed:241.0f/255.0f green:147.0f/255.0f blue:31.0f/255.0f alpha:0.780]];
-    [self.save.layer setCornerRadius:6.0f];
-    self.save.showsTouchWhenHighlighted = YES;
-    
-    [self.view addSubview:self.save];
-    
-
+    // 按键
+    [self createUI_Button];
     
     
     //初始化model
@@ -186,11 +137,93 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     
     //init tableview cell
     [self buildCellView];
-    [self  initCellView:true];
+    //[self initCellView:true];
+    [self initCellView:YES];
     
 }
 
-#pragma private
+#pragma mark - 
+#pragma mark UI Create
+
+
+// Navigation
+- (void) createUI_Navigation {
+    //   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"报销单创建" style:UIBarButtonSystemItemDone target:self action:@selector(back)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(back)];
+    
+    self.navigationItem.title = @"记一单";
+}
+
+// 常规表项
+- (void) createUI_TableCommon {
+    self.tv = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.tv.dataSource = self;
+    self.tv.delegate = self;
+    
+    self.tv.tableFooterView = [[UIView alloc]init];
+    
+    //    self.view.backgroundColor = [UIColor colorWithRed:0.876 green:0.874 blue:0.760 alpha:1.000];
+    self.tv.scrollEnabled = NO;
+    
+    //    self.tv.backgroundColor = [UIColor colorWithRed:0.876 green:0.874 blue:0.760 alpha:0.310];
+    self.tv.backgroundView.backgroundColor = nil;
+    
+    /******************************************
+     ****** delete by wuxiaocheng @ 1/30 for 多余代码
+     
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
+        self.edgesForExtendedLayout=UIRectEdgeNone;
+    }
+    
+    ***************************/
+    [self.view addSubview:self.tv];
+}
+
+// remarks
+- (void) createUI_TableRemarks {
+    //    UIView * div2 =[UIView new];
+    //    div2.frame = CGRectMake(self.view.frame.size.width/2-10 , 80 ,
+    //                              1.0f, 40.0f);
+    //    div2.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
+    //    [self.view addSubview:div2];
+    
+    UILabel * lb3 = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2)-10, 263.0f, 30, 30)];
+    lb3.text = @"备注";
+    lb3.font =   [lb3.font fontWithSize:22];
+    //    lb3.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:24];
+    lb3.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:lb3];
+    
+    self.descTx = [[UITextView alloc] initWithFrame:CGRectMake(8.0, 293, self.view.bounds.size.width-16.0, (self.view.bounds.size.height-240)*0.25)];
+    self.descTx.delegate = self;
+    self.descTx.layer.borderColor =  [UIColor grayColor].CGColor;
+    
+    self.descTx.layer.borderWidth = 1.0;
+    //    self.descTx.backgroundColor = [UIColor colorWithRed:0.969 green:0.969 blue:0.843 alpha:1.000];
+    [self.view addSubview:self.descTx];
+    
+    self.descTx.tag = 1;
+}
+
+// 按键
+- (void) createUI_Button {
+    //添加按键
+    self.save = [[UIButton alloc] initWithFrame:CGRectMake(8, self.descTx.frame.origin.y+self.descTx.frame.size.height+15, 320-16, (self.view.bounds.size.height-240)*0.15)];
+    
+    [self.save setTitle:@"保存" forState: UIControlStateNormal];
+    [self.save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchDown];
+    [self.save setBackgroundColor:[UIColor colorWithRed:241.0f/255.0f green:147.0f/255.0f blue:31.0f/255.0f alpha:0.780]];
+    [self.save.layer setCornerRadius:6.0f];
+    self.save.showsTouchWhenHighlighted = YES;
+    
+    [self.view addSubview:self.save];
+    
+}
+
+
+
+
+#pragma mark - private
 -(UIView *)coverView
 {
     self.coverView = [[UIView alloc]initWithFrame:self.view.bounds];
@@ -258,7 +291,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 }
 
 
-#pragma btn delegate
+#pragma mark - btn delegate
 -(void)readd:(UIButton *)parmSender{
     
     EXPLineModelDetailViewController *detailViewController = [[EXPLineModelDetailViewController alloc]initWithNibName:nil bundle:nil];
@@ -285,10 +318,10 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     NSNumber * expense_type_id =  ExpenseTypePicker.expense_type_id;
     NSString * expense_type_desc = ExpenseTypePicker.expense_type_desc;
  ;
-    NSNumber * expense_amount = [NSNumber numberWithFloat:   [[NSString stringWithFormat:@"%.2f",amountCell.numberValue] floatValue]];
+    NSNumber * expense_amount = [NSNumber numberWithDouble:   [[NSString stringWithFormat:@"%.2f",amountCell.numberValue] doubleValue]];
     NSNumber * expense_number = [NSNumber numberWithInteger:numberCell.numberValue];
-    float  _total_amount = [expense_amount floatValue] * [expense_amount integerValue];
-    NSNumber * total_amount = [NSNumber numberWithFloat:_total_amount];
+    double  _total_amount = [expense_amount doubleValue] * [expense_number integerValue];
+    NSNumber * total_amount = [NSNumber numberWithDouble:_total_amount];
     
  
     
@@ -310,7 +343,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     ///汇率 币种
     NSString * currency = rateCell.currencyLabel.text;
     
-    NSNumber * exchangeRate =    [NSNumber numberWithFloat:   [[NSString stringWithFormat:@"%.2f",rateCell.numberValue] floatValue]];
+    NSNumber * exchangeRate =    [NSNumber numberWithDouble:   [[NSString stringWithFormat:@"%.2f",rateCell.numberValue] doubleValue]];
     
     //判断是否有照片，没有照片则插入nil
 //    if([amountCell.img image] !=nil){
@@ -492,47 +525,51 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 
 
 
-#pragma  private
--(void)buildCellView
+#pragma mark -
+#pragma mark buildCellView
+
+- (void) buildCellView
 {
     
-
+        // 金额
         if (amountCell == nil)
         {
-            amountCell = [[LMTableAmountInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTableAmountInputCell"];
+            amountCell = [[LMTableAmountInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTableAmountInputCell"];
             amountCell.tv = self;
             amountCell.selectionStyle = UITableViewCellSelectionStyleNone;
             imgArray = amountCell.imageArray;
         }
         
-
+        // 费用类型
         if (expenseTypeCell == nil)
         {
-            expenseTypeCell = [[LMTablePickerInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputCell"];
+            expenseTypeCell = [[LMTablePickerInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputCell"];
             
             expenseTypeCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        ExpenseTypePicker.cell =expenseTypeCell;
+        ExpenseTypePicker.cell = expenseTypeCell;
         
         expenseTypeCell.picker.delegate = ExpenseTypePicker;
         expenseTypeCell.picker.dataSource = ExpenseTypePicker;
         
         
         expenseTypeCell.textLabel.text = @"费用";
-
+    
+    
+        // 日期
         if (dateCell == nil)
         {
-            dateCell = [[LMTableDateFromToCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTableDateFromToCell"];
+            dateCell = [[LMTableDateFromToCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTableDateFromToCell"];
             dateCell.selectionStyle = UITableViewCellSelectionStyleNone;
             dateCell.parent = self;
         }
 
         
-
+        // 地点
         if (placeCell == nil)
         {
-            placeCell = [[LMTablePickerInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputCell"];
+            placeCell = [[LMTablePickerInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputCell"];
             placeCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }
@@ -541,12 +578,12 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         placeCell.picker.delegate =LocationPicker;
         placeCell.picker.dataSource = LocationPicker;
         
-
     
+        // 数量
         if(numberCell == nil)
         {
-        
-            numberCell = [[LMTableTextInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTableTextInputCell"];
+         
+            numberCell = [[LMTableTextInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTableTextInputCell"];
             numberCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
@@ -554,10 +591,10 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     [numberCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     [amountCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     
-    
+        // 汇率
         if(rateCell  == nil)
         {
-            rateCell = [[LMRateFieldCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMRateFieldCell"];
+            rateCell = [[LMRateFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMRateFieldCell"];
             rateCell.selectionStyle = UITableViewCellSelectionStyleNone;
             rateCell.parent = self;
             
@@ -567,17 +604,17 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 }
 
 
--(void)initCellView:(BOOL)animated{
+-(void)initCellView:(BOOL)animatedFlag{
     //赋值
     if(record != nil && !insertFlag && updateFlag){
         //金额
         NSNumber * expense_amount = [record valueForKey:@"expense_amount"];
         
-        amountCell.amount.text = [NSString  stringWithFormat:@"%.2f",[expense_amount floatValue]];
+        amountCell.amount.text = [NSString  stringWithFormat:@"%.2f",[expense_amount doubleValue]];
         
         NSNumber * amount = [record valueForKey:@"expense_amount"];
         
-        amountCell.numberValue =[amount floatValue];
+        amountCell.numberValue =[amount doubleValue];
         
         //数量
         
@@ -588,8 +625,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         
         //初始化汇率 币种
         NSNumber * exchangeRate = [record valueForKey:@"exchangeRate"];
-        rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.2f",[exchangeRate floatValue]];
-        rateCell.numberValue = [exchangeRate floatValue];
+        rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.2f",[exchangeRate doubleValue]];
+        rateCell.numberValue = [exchangeRate doubleValue];
         rateCell.currencyLabel.text = [record valueForKey:@"currency"];
         
         
@@ -707,13 +744,13 @@ static NSUInteger MAX_SIZE_JPG = 307200;
           exchangeRate:(NSNumber *  )exchangRate
 {
     //初始化汇率 币种
-    rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.2f",[exchangRate floatValue]];
-    rateCell.numberValue = [exchangRate floatValue];
+    rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.2f",[exchangRate doubleValue]];
+    rateCell.numberValue = [exchangRate doubleValue];
     rateCell.currencyLabel.text = currency;
     
 }
 
-#pragma key-valuedelegate
+#pragma mark key-valuedelegate
 //auto modify the total amount
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -723,8 +760,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         if(numberCell.numberValue !=0 && amountCell.numberValue !=0){
             
             NSLog(@"amountCell is %f",amountCell.numberValue);
-            float total = numberCell.numberValue * amountCell.numberValue;
-            numberCell.totalLabel.text= [numberCell.numberFormatter stringFromNumber:[NSNumber numberWithFloat:total]];
+            double total = numberCell.numberValue * amountCell.numberValue;
+            numberCell.totalLabel.text= [numberCell.numberFormatter stringFromNumber:[NSNumber numberWithDouble:total]];
         }else{
             numberCell.totalLabel.text = @"0";
         }

@@ -11,7 +11,7 @@
 #import  "MWPhoto.h"
 
 
-
+#define AMOUNT_DECIMAL_LENGTH_MAX 2
 
 
 @implementation LMTableAmountInputCell{
@@ -44,15 +44,15 @@
     dotBeginFlag = NO;
     firstInput = YES;
     endFlag = NO;
-    dotnumber = 2;
+    dotnumber = AMOUNT_DECIMAL_LENGTH_MAX;
     
 	if (!self.numberFormatter) {
 		self.numberFormatter = [[NSNumberFormatter alloc] init];
 		self.numberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
-		self.numberFormatter.maximumFractionDigits = 2;
+		self.numberFormatter.maximumFractionDigits = AMOUNT_DECIMAL_LENGTH_MAX;
 	}
 	
-	self.detailTextLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:numberValue]];
+	self.detailTextLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:numberValue]];
     
     _imageArray = [[NSMutableArray alloc] init];
     
@@ -167,7 +167,7 @@
 
 
 
-#pragma  cell select
+#pragma  mark cell select
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
 
@@ -177,7 +177,7 @@
         firstInput = YES;
         dotBeginFlag = NO;
         endFlag= NO;
-        dotnumber=2;
+        dotnumber=AMOUNT_DECIMAL_LENGTH_MAX;
         [self becomeFirstResponder];
          
 	}
@@ -225,38 +225,41 @@
 	return (self.numberValue > 10);
 }
 
+
 - (void)insertText:(NSString *)theText {
 	
 	// make sure we receioved an integer (on the iPad a user chan change the keybord style)
 	NSScanner *sc = [NSScanner scannerWithString:theText];
 	if ([sc scanDecimal:NULL]) {
 		if ([sc isAtEnd]) {
-            NSLog(@"%@",theText);
+            NSLog(@"%@, %f",theText, self.numberValue);
             
             if(firstInput){
                 firstInput = NO;
                 self.numberValue = 0.0f;
             }
             
+            // 开始小数部分输入
             if([theText isEqualToString:@"."] ){
-                
                 
                 dotBeginFlag = YES;
                 return;
             }
+            
             //如果开始输入小数，且没有结束
             if(dotBeginFlag && !endFlag && dotnumber !=0){
                 NSUInteger addedValues = [theText integerValue];
-               dotnumber--;
-                self.numberValue += addedValues * powf(0.1,  (2-dotnumber));
+                dotnumber--;
+                self.numberValue += addedValues * powf(0.1,  (AMOUNT_DECIMAL_LENGTH_MAX-dotnumber));
                 
-                self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:self.numberValue]];
+                self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble: self.numberValue]];
                 if(dotnumber ==0){
                     endFlag = YES;
                 }
                 return;
             }
             
+            // 小数为输入完成后 不允许继续输入
             if(endFlag ){
                 return;
             }
@@ -267,14 +270,21 @@
                 
                 return;
             }
+            
+            //NSLog(@"length %lu", (unsigned long)theText.length);
 			self.numberValue *= (10 * theText.length);
+           // NSLog(@"%f, %lu", self.numberValue+6, (unsigned long)addedValues );
+
 			self.numberValue += addedValues;
+            //NSLog(@"%f",  66666660.000000+6);
+
 			if (self.numberValue < self.lowerLimit) {
 				self.numberValue = self.lowerLimit;
 			} else if (self.numberValue > self.upperLimit) {
 				self.numberValue = self.upperLimit;
 			}
-			self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithInteger:self.numberValue]];
+            
+			self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
 //            NSLog(@"text is %@,value is %d text length is %d",self.amount.text,self.numberValue,self.amount.text.length);
 			valueChanged = YES;
 		}
@@ -282,33 +292,63 @@
     
 }
 
+
+///*************
 - (void)deleteBackward {
-    if(endFlag || dotBeginFlag){
-        return;
-    }
     
+    NSLog(@"%d, %d,%d",endFlag,dotBeginFlag, dotnumber);
+    
+    // 第一次输入
     if(firstInput){
         firstInput = NO;
         self.numberValue = 0.0f;
         	self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithInteger:self.numberValue]];
         return;
     }
-    self.numberValue = self.numberValue / 10;
     
-    double a1 ;
+    if(endFlag || dotBeginFlag){
+        // 删除小数
+        dotnumber ++;
+        endFlag = NO;
+        if (dotnumber == AMOUNT_DECIMAL_LENGTH_MAX ) {
+            dotBeginFlag = NO;
+        }
+        // 小数点左移 AMOUNT_DECIMAL_LENGTH_MAX-dotnumber
+        self.numberValue = self.numberValue*pow(10, AMOUNT_DECIMAL_LENGTH_MAX-dotnumber);
+        //return;
+    }
+    else {
+        // 删除整数
+        self.numberValue = self.numberValue / 10;
+
+    }
+
     
-     modf(self.numberValue,&a1);
+    double tempIntPart ;
+    
+     modf(self.numberValue,&tempIntPart);
  
-    self.numberValue = a1;
+    self.numberValue = tempIntPart;
     
+    // 小数点右移 AMOUNT_DECIMAL_LENGTH_MAX－dotnumber
+    self.numberValue = self.numberValue*pow(0.1, AMOUNT_DECIMAL_LENGTH_MAX-dotnumber);
+
     
+    //NSLog(@"del %f, %f", self.numberValue, tempIntPart);
 	if (self.numberValue < self.lowerLimit) {
 		self.numberValue = self.lowerLimit;
 	} else if (self.numberValue > self.upperLimit) {
 		self.numberValue = self.upperLimit;
 	}
-	self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithInteger:self.numberValue]];
+    
+    //NSLog(@"del %f, %f", self.numberValue, tempIntPart);
+
+    //self.amount.text = [NSString stringWithFormat:@"%f",self.numberValue];
+
+	self.amount.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
 
 	valueChanged = YES;
 }
+ 
+ //*****************/
 @end
