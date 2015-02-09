@@ -56,6 +56,7 @@
 @property(nonatomic, getter=isSecureTextEntry) BOOL secureTextEntry;
 @property(nonatomic) UITextSpellCheckingType spellCheckingType;
 @property (strong, nonatomic) IBOutlet UILabel *amount;
+@property (strong, nonatomic) IBOutlet UILabel *currency;         //币种
 
 @property (strong, nonatomic) IBOutlet UIImageView *img;
 

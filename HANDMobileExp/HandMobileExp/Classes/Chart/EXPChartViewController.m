@@ -271,8 +271,8 @@
 
 -(void)modelDidFinishLoad:(FMDataBaseModel *)model{
     
-    float sumAmount = 0;
-    float monthAmountSum = 0;
+    double sumAmount = 0;
+    double monthAmountSum = 0;
     FMDataBaseModel *myModel = model;
     self.valueArray = [[NSMutableArray alloc]init];
     self.colorArray = [[NSMutableArray alloc] init];
@@ -285,9 +285,11 @@
     for (NSDictionary *record in myModel.result) {
         NSArray *amountInfo = [[record valueForKey:@"expense_date"] componentsSeparatedByString:@"-"];
         self.detailAmount = nil;
-        float amount = [[record valueForKey:@"expense_amount"] floatValue]
-        * [[record valueForKey:@"expense_number"] floatValue];
-        ;
+        //float amount = [[record valueForKey:@"expense_amount"] floatValue]
+        //* [[record valueForKey:@"expense_number"] floatValue];
+        
+        double amount = [[record valueForKey:@"total_amount"] doubleValue];
+        
         self.detailAmount = [[EXPdetailAmount alloc]initWithYear:amountInfo[0] Month:amountInfo[1] SumAmount:amount Type:[record valueForKey:@"expense_class_desc"]];
         [self.detailAmountArray addObject:self.detailAmount];
         

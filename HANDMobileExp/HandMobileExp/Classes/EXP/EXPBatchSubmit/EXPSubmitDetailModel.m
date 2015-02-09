@@ -101,7 +101,8 @@
 }
 
 
-#pragma -mark TTTableViewDataSource delegate
+#pragma mark - TTTableViewDataSource delegate
+
 -(void)tableViewDidLoadModel:(UITableView *)tableView
 {
     
@@ -114,7 +115,7 @@
     NSMutableArray *sectionSumMoeny = [[NSMutableArray alloc]init];
     NSString *sumMoney = [[NSString alloc]init];
     int count = 0;
-    float sumMoneyInt = 0;
+    double sumMoneyInt = 0;
     
     for (  NSDictionary * record in  model.result){
         
@@ -130,9 +131,11 @@
             
             if ([time isEqualToString:[record objectForKey:@"expense_date"]]) {
                 
-                sumMoneyInt = sumMoneyInt + [[record objectForKey:@"expense_amount"]floatValue]
-                *[[record objectForKey:@"expense_number"] integerValue];
-                ;
+                //sumMoneyInt = sumMoneyInt + [[record objectForKey:@"expense_amount"]floatValue]
+                //*[[record objectForKey:@"expense_number"] integerValue];
+                
+                // 计算 section 总额
+                sumMoneyInt += [[record objectForKey:@"total_amount"]doubleValue];
             }
         }
         sumMoney = [NSString stringWithFormat:@"%.2f",sumMoneyInt];
@@ -153,9 +156,14 @@
             
             if([time isEqualToString:[record valueForKey:@"expense_date"]]){
                 LMCellStypeItem_1 * cellitem = [LMCellStypeItem_1 itemWithText:self selector:@selector(openURLForItem:)];
-                cellitem.amount = [[record valueForKey:@"expense_amount"] floatValue]
-                *[[record valueForKey:@"expense_number"] integerValue];
-                ;
+                
+                // 计算单项总额
+                cellitem.amount = [[record valueForKey:@"total_amount"] doubleValue];
+                NSLog(@"total item: %f , %f", [[record valueForKey:@"expense_amount"] doubleValue], [[record valueForKey:@"total_amount"] doubleValue]);
+               // cellitem.amount = [[record valueForKey:@"expense_amount"] floatValue]
+                //*[[record valueForKey:@"expense_number"] integerValue];
+                
+
                 cellitem.primary_id =  [record valueForKey:@"id"];
                 
                 

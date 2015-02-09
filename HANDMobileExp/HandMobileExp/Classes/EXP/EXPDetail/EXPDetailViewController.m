@@ -56,7 +56,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(returnHomePage:)];
     
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addDetailPage:)];
-  UIBarButtonItem * adddetailpage =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addDetailPage:)];
+    UIBarButtonItem * adddetailpage =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addDetailPage:)];
 
    UIBarButtonItem * queryBar =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(querypage:)];
     
@@ -77,7 +77,7 @@
     
 }
 
-#pragma button delegate
+#pragma mark - button delegate
 - (void)addDetailPage:(id *)sender
 {
    EXPLineModelDetailViewController *detail =  [[EXPLineModelDetailViewController alloc]initWithNibName:nil bundle:nil];
@@ -127,18 +127,22 @@
 
 
 
-#pragma LMModelDelegate
+#pragma marik -
+#pragma mark LMModelDelegate
+
 -(void)modelDidFinishLoad:(FMDataBaseModel *)model{
 
-     [super modelDidFinishLoad:model];
-    float sumMoneyAmount = 0;
+    [super modelDidFinishLoad:model];
+    // 总计
+    double sumMoneyAmount = 0;
     for (  NSDictionary * record in  model.result){
         
         
         
-        sumMoneyAmount = sumMoneyAmount + [[record objectForKey:@"expense_amount"]floatValue]
-        * [[record objectForKey:@"expense_number"] integerValue]
-        ;
+       // sumMoneyAmount = sumMoneyAmount + [[record objectForKey:@"expense_amount"]floatValue]
+        //* [[record objectForKey:@"expense_number"] integerValue];
+        
+        sumMoneyAmount += [[record objectForKey:@"total_amount"] doubleValue];
     }
     
     NSString *sumMoney = [NSString stringWithFormat:@"¥%.2f",sumMoneyAmount];

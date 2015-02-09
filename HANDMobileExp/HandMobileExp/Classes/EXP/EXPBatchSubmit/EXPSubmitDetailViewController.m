@@ -113,7 +113,7 @@
     
 }
 
-#pragma button delegate
+#pragma mark button delegate
 - (void)addDetailPage:(id *)sender
 {
     EXPLineModelDetailViewController *detail =  [[EXPLineModelDetailViewController alloc]initWithNibName:nil bundle:nil];
