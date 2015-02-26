@@ -18,8 +18,9 @@
 - (void)tableViewCell:(LMTableAmountInputCell *)cell didEndEditingWithInteger:(NSUInteger)value;
 @end
 
-@interface LMTableAmountInputCell : UITableViewCell<UIKeyInput, UITextInputTraits,IPickerActionSheetDelegate,MWPhotoBrowserDelegate> {
-	
+//@interface LMTableAmountInputCell : UITableViewCell<UIKeyInput, UITextInputTraits,IPickerActionSheetDelegate,MWPhotoBrowserDelegate> {
+@interface LMTableAmountInputCell : UITableViewCell<IPickerActionSheetDelegate,MWPhotoBrowserDelegate> {
+
 	BOOL valueChanged;
 
 	UIEdgeInsets originalContentInsets;

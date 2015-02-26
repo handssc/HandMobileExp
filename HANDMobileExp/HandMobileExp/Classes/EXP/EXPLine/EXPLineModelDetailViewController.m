@@ -292,7 +292,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     //检查金额
 
     //NSLog(@"eps %.10f", eps);
-    if( fabs(amountCell.numberValue-0) < eps || numberCell.numberValue == 0 || fabs(rateCell.numberValue-0) < eps ){
+    if( fabs(numberCell.amountValue-0) < eps || numberCell.numberValue == 0 || fabs(rateCell.numberValue-0) < eps ){
     
         [LMAlertViewTool showAlertView:@"提示" message:@"请输入正确金额" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         return NO;
@@ -329,8 +329,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     
     NSNumber * expense_type_id =  ExpenseTypePicker.expense_type_id;
     NSString * expense_type_desc = ExpenseTypePicker.expense_type_desc;
- ;
-    NSNumber * expense_amount = [NSNumber numberWithDouble:   [[NSString stringWithFormat:@"%.2f",amountCell.numberValue] doubleValue]];
+    
+    NSNumber * expense_amount = [NSNumber numberWithDouble:   [[NSString stringWithFormat:@"%.2f",numberCell.amountValue] doubleValue]];
     NSNumber * expense_number = [NSNumber numberWithInteger:numberCell.numberValue];
 
     
@@ -354,7 +354,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     ///汇率 币种
     NSString * currency = rateCell.currencyLabel.text;
     
-    NSNumber * exchangeRate =    [NSNumber numberWithDouble:   [[NSString stringWithFormat:@"%.2f",rateCell.numberValue] doubleValue]];
+    NSNumber * exchangeRate =    [NSNumber numberWithDouble:   [[NSString stringWithFormat:@"%.4f",rateCell.numberValue] doubleValue]];
     
     // 总额计算
     double  _total_amount = [expense_amount doubleValue] * [expense_number integerValue] * [exchangeRate doubleValue];
@@ -444,7 +444,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 
     }
     
-    //[LMAlertViewTool showAlertView:@"反馈" message:@"保存成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [LMAlertViewTool showAlertView:@"提示" message:@"保存成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
 }
 
 
@@ -620,11 +620,12 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     
         // 增加 观察依赖关系 总额 依赖于 金额 数量 汇率
         [numberCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        [amountCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-    
+        //[amountCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        [numberCell addObserver:self forKeyPath:@"amountValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+  
         [rateCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-
     
+
 }
 
 
@@ -634,22 +635,26 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         //金额
         NSNumber * expense_amount = [record valueForKey:@"expense_amount"];
         
-        amountCell.amount.text = [NSString  stringWithFormat:@"%.2f",[expense_amount doubleValue]];
-        amountCell.currency.text = [record valueForKey:@"currency"];
-        NSNumber * amount = [record valueForKey:@"expense_amount"];
+        //amountCell.amount.text = [NSString  stringWithFormat:@"%.2f",[expense_amount doubleValue]];
+        numberCell.amountTextField.text = [NSString  stringWithFormat:@"%.2f",[expense_amount doubleValue]];
+
+        //amountCell.currency.text = [record valueForKey:@"currency"];
+        numberCell.currency.text = [[record valueForKey:@"currency"] substringWithRange:NSMakeRange(0, 3)];
+
+        //NSNumber * amount = [record valueForKey:@"expense_amount"];
         
-        amountCell.numberValue =[amount doubleValue];
+        numberCell.amountValue =[expense_amount doubleValue];
         
         //数量
         
          NSNumber * expense_number = [record valueForKey:@"expense_number"];
         numberCell.numberValue = [expense_number integerValue];
-        numberCell.numberLabel.text = [NSString stringWithFormat:@"%@",expense_number];
+        numberCell.numberTextField.text = [NSString stringWithFormat:@"%@",expense_number];
         
         
         //初始化汇率 币种
         NSNumber * exchangeRate = [record valueForKey:@"exchangeRate"];
-        rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.2f",[exchangeRate doubleValue]];
+        rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.4f",[exchangeRate doubleValue]];
         rateCell.numberValue = [exchangeRate doubleValue];
         rateCell.currencyLabel.text = [record valueForKey:@"currency"];
         
@@ -768,10 +773,10 @@ static NSUInteger MAX_SIZE_JPG = 307200;
           exchangeRate:(NSNumber *  )exchangRate
 {
     //初始化汇率 币种
-    rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.2f",[exchangRate doubleValue]];
+    rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.4f",[exchangRate doubleValue]];
     rateCell.numberValue = [exchangRate doubleValue];
     rateCell.currencyLabel.text = currency;
-    amountCell.currency.text = [NSString stringWithFormat:@"%@",currency];
+    numberCell.currency.text = [NSString stringWithFormat:@"%@", [currency substringWithRange:NSMakeRange(0, 3)]];
     
     NSLog(@"修改币种 %@, %@", currency, amountCell.currency.text);
 }
@@ -780,21 +785,32 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 //auto modify the total amount
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if([keyPath isEqualToString:@"numberValue"])
+    
+   // NSLog(@"amountCell is %@", keyPath);
+
+    if([keyPath isEqualToString:@"numberValue"] || [keyPath isEqualToString:@"amountValue"])
     {
 
-        if(numberCell.numberValue !=0 && amountCell.numberValue !=0 && rateCell.numberValue != 0){
+        ///**
+        if(numberCell.numberValue !=0 && numberCell.amountValue !=0 && rateCell.numberValue != 0){
             
-            NSLog(@"amountCell is %f",amountCell.numberValue);
-            double total = numberCell.numberValue * amountCell.numberValue * rateCell.numberValue;
-            numberCell.totalLabel.text= [numberCell.numberFormatter stringFromNumber:[NSNumber numberWithDouble:total]];
+           // NSLog(@"amountCell is %f",amountCell.numberValue);
+            //double total = numberCell.numberValue * amountCell.numberValue * rateCell.numberValue;
+            //numberCell.totalLabel.text= [numberCell.numberFormatter stringFromNumber:[NSNumber numberWithDouble:total]];
+            double total = numberCell.numberValue * numberCell.amountValue * rateCell.numberValue;
+
+            amountCell.amount.text= [amountCell.numberFormatter stringFromNumber:[NSNumber numberWithDouble:total]];
+
         }else{
-            numberCell.totalLabel.text = @"0";
+            //numberCell.totalLabel.text = @"0";
+            amountCell.amount.text = @"0";
         }
-        
+        //*/
+        //amountCell.amount.text
     }
     
-    //}
+    
+
 }
 
 #pragma tableview datasource

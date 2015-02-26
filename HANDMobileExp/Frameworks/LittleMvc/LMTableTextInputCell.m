@@ -11,6 +11,7 @@
 @implementation LMTableTextInputCell{
     BOOL valueChanged;
     BOOL firstInput;//是否第一次输入
+    
 }
 
 
@@ -21,14 +22,23 @@
 	self.lowerLimit = 0;//最小为0
 	self.upperLimit = 1000000000; //最大允许9位
     self.numberValue = 1;
-	
+    self.amountValue = 0;
+    	
 	if (!self.numberFormatter) {
 		self.numberFormatter = [[NSNumberFormatter alloc] init];
-		self.numberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
+        self.numberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
 		self.numberFormatter.maximumFractionDigits = 2;
 	}
 	
 	self.numberLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:self.numberValue]];
+    
+    _amountTextFieldControl = [[UItextFieldControl alloc] initWithRadixPointNum:2 length:10 ];
+    _numberTextFieldControl = [[UItextFieldControl alloc] initWithRadixPointNum:0 length:5 ];
+
+    
+    self.amountTextField.delegate = _amountTextFieldControl;
+    self.numberTextField.delegate = _numberTextFieldControl;
+    
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -48,29 +58,58 @@
 {
 
     // Initialization code
-    self.keyboardType = UIKeyboardTypeNumberPad;
+    //self.keyboardType = UIKeyboardTypeNumberPad;
     firstInput = YES;
 
     
     
 }
 
+- (void)amountTextFieldDoneEditing:(id)sender {
+    self.amountValue = [_amountTextField.text doubleValue];
+    _amountTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.amountValue]];
+    NSLog(@"amout: %f", self.amountValue);
+    NSLog(@"number: %f", self.numberValue);
+    [sender resignFirstResponder];
 
+
+}
+
+- (void)numberTextFieldDoneEditing:(id)sender {
+    self.numberValue = [_numberTextField.text doubleValue];
+    _numberTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
+    NSLog(@"amout: %f", self.amountValue);
+
+    NSLog(@"number: %f", self.numberValue);
+    [sender resignFirstResponder];
+
+
+}
+
+
+
+/*
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    
     if(selected){
         [self becomeFirstResponder];
     }
     
     NSLog(@"fsfsdf");
-
     // Configure the view for the selected state
 }
 
-- (BOOL)canBecomeFirstResponder {
+ */
+
+
+
+/*
+ 
+ - (BOOL)canBecomeFirstResponder {
 	return YES;
-}
+ }
 
 - (BOOL)hasText {
 	return (self.numberValue > 0);
@@ -121,5 +160,6 @@
     
 	valueChanged = YES;
 }
+ */
 
 @end

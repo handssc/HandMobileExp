@@ -160,7 +160,7 @@
                                          @"expense_date_to"    : [record valueForKey:@"expense_date_to"],
                                          @"description" : [record valueForKey:@"description"],
                                          @"local_id" : [record valueForKey:@"id"],
-                                         @"currency_code" : [record valueForKey:@"currency"],
+                                         @"currency_code" : [[record valueForKey:@"currency"] substringWithRange:NSMakeRange(0, 3)],
                                          @"exchange_rate" : exchangeRate
                                          
                                          

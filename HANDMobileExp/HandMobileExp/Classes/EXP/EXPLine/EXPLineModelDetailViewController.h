@@ -23,7 +23,7 @@
 }
 
 @property(nonatomic,strong) UITableView * tv;
-@property(nonatomic,strong)  UITextView * descTx ;
+@property(nonatomic,strong) UITextView * descTx ;
 
 
 @property(nonatomic,strong) UIButton *save;

@@ -173,7 +173,8 @@
 
     
     [super setSelected:selected animated:animated];
-	if (selected) {
+	
+    if (selected) {
         firstInput = YES;
         dotBeginFlag = NO;
         endFlag= NO;
@@ -211,6 +212,7 @@
 }
 
 
+/*
 #pragma mark -
 #pragma mark Respond to touch and become first responder.
 
@@ -349,6 +351,7 @@
 
 	valueChanged = YES;
 }
- 
+
+*/
  //*****************/
 @end

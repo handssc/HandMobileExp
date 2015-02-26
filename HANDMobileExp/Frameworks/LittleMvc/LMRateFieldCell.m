@@ -9,7 +9,7 @@
 #import "LMRateFieldCell.h"
 #import "EXPRateViewController.h"
 
-#define RATE_DECIMAL_LENGTH_MAX 2
+#define RATE_DECIMAL_LENGTH_MAX 4
 
 @implementation LMRateFieldCell{
     
@@ -52,7 +52,7 @@
         firstInput = YES;
         dotBeginFlag = NO;
         endFlag= NO;
-        dotnumber=2;
+        dotnumber = RATE_DECIMAL_LENGTH_MAX;
         [self becomeFirstResponder];
     }
     // Configure the view for the selected state
@@ -109,12 +109,12 @@
     dotBeginFlag = NO;
     firstInput = YES;
     endFlag = NO;
-    dotnumber = 2;
+    dotnumber = RATE_DECIMAL_LENGTH_MAX;
     
 	if (!self.numberFormatter) {
 		self.numberFormatter = [[NSNumberFormatter alloc] init];
 		self.numberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
-		self.numberFormatter.maximumFractionDigits = 2;
+		self.numberFormatter.maximumFractionDigits = 4;
 	}
 	
 	self.detailTextLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:numberValue]];

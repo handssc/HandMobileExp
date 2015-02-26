@@ -26,7 +26,7 @@
                         <color key="textColor" red="0.10196079313755035" green="0.364705890417099" blue="0.56078433990478516" alpha="1" colorSpace="deviceRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="总额" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="REn-44-CaL">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="金额" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="REn-44-CaL">
                         <rect key="frame" x="17" y="4" width="82" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.0" alpha="0.66000000000000003" colorSpace="calibratedWhite"/>
@@ -40,16 +40,35 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Chd-Vl-czX">
                         <rect key="frame" x="17" y="22" width="36" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.0870769027" green="0.49502840910000001" blue="0.044282187559999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入金额" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TEQ-M7-BZU">
+                        <rect key="frame" x="61" y="7" width="121" height="30"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                        <connections>
+                            <action selector="amountTextFieldDoneEditing:" destination="hMI-dV-4Sa" eventType="editingDidEnd" id="lah-H9-VT8"/>
+                        </connections>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DME-a9-bEd">
+                        <rect key="frame" x="232" y="8" width="80" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <action selector="numberTextFieldDoneEditing:" destination="hMI-dV-4Sa" eventType="editingDidEnd" id="x9X-l2-r3p"/>
+                        </connections>
+                    </textField>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.96984614160000004" green="0.96778168519999996" blue="0.84132054619999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="amountTextField" destination="TEQ-M7-BZU" id="svy-z7-IA8"/>
+                <outlet property="currency" destination="Chd-Vl-czX" id="shu-jM-bs9"/>
                 <outlet property="numberLabel" destination="bUf-5i-25s" id="Avc-lp-ieC"/>
+                <outlet property="numberTextField" destination="DME-a9-bEd" id="Gd2-2C-Rf2"/>
                 <outlet property="totalLabel" destination="h8N-ME-rmn" id="xe2-az-yI7"/>
             </connections>
         </tableViewCell>

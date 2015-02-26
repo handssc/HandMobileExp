@@ -54,6 +54,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     else {
         
         sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
+
     }
     
     sheet.tag = 255;
