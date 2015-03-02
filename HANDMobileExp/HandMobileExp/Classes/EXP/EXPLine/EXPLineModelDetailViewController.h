@@ -10,6 +10,8 @@
 #import "LMTableDateInputCell.h"
 #import "LMTableAmountInputCell.h"
 #import "LMTablePickerInputCell.h"
+#import "LMTablePickerInputPlaceCell.h"
+
 #import "EXPExpenseTypePicker.h"
 #import "EXPLocationPicker.h"
 #import "LMAlertViewTool.h"

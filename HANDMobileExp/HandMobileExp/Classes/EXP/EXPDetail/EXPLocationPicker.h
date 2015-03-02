@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LMTablePickerInputPlaceCell.h"
 #import "LMTablePickerInputCell.h"
 
 @interface EXPLocationPicker : NSObject <UIPickerViewDataSource,UIPickerViewDelegate>
@@ -15,7 +16,7 @@
 @property (nonatomic,strong)NSArray *provinces;
 @property (nonatomic,strong)NSArray *citys;
 
-@property (nonatomic,strong)LMTablePickerInputCell * cell;
+@property (nonatomic,strong)LMTablePickerInputPlaceCell * cell;
 
 @property (nonatomic,strong) NSString * city_desc;
 @property (nonatomic,strong) NSString * province_desc;

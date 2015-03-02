@@ -14,7 +14,7 @@
     
 }
 
-
+// 初始化pickView
 - (void)initalizeInputView {
 	self.picker = [[UIPickerView alloc] initWithFrame:CGRectZero];
 	self.picker.showsSelectionIndicator = YES;

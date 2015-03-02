@@ -150,6 +150,19 @@
                 
                  NSString *  exchangeRate = [NSString stringWithFormat:@"%.2f",[exchange_rate floatValue]];
                 
+                NSString* currency = [NSString stringWithFormat:@"%@",[record valueForKey:@"currency"] ];
+                
+                NSString* currency_code = [currency substringToIndex:3];
+                NSString* currency_name = nil;
+                if (currency.length < 5) {
+                    currency_name = @"人民币";
+                }
+                else {
+                    currency_name = [currency substringFromIndex:4];
+
+                }
+                NSLog(@"%@, %@", currency_code,currency_name);
+                
                 NSDictionary * param = @{
                                          @"expense_amount" : expenseAmount,
                                          @"expense_number" : [record valueForKey:@"expense_number"],
@@ -160,7 +173,8 @@
                                          @"expense_date_to"    : [record valueForKey:@"expense_date_to"],
                                          @"description" : [record valueForKey:@"description"],
                                          @"local_id" : [record valueForKey:@"id"],
-                                         @"currency_code" : [[record valueForKey:@"currency"] substringWithRange:NSMakeRange(0, 3)],
+                                         @"currency_code" : currency_code,
+                                         @"currency_name" : currency_name,
                                          @"exchange_rate" : exchangeRate
                                          
                                          

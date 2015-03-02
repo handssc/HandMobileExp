@@ -31,7 +31,7 @@
     
     LMTableAmountInputCell *amountCell;             // 金额
     LMTablePickerInputCell *expenseTypeCell;        // 费用类型
-    LMTablePickerInputCell *placeCell;              // 地点
+    LMTablePickerInputPlaceCell *placeCell;              // 地点
     LMTableTextInputCell *numberCell;               // 数量
     
     LMRateFieldCell  * rateCell;                    // 费率
@@ -587,7 +587,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         // 地点
         if (placeCell == nil)
         {
-            placeCell = [[LMTablePickerInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputCell"];
+            placeCell = [[LMTablePickerInputPlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputPlaceCell"];
             placeCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }
@@ -679,7 +679,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         NSArray *locationInfo = [[record valueForKey:@"expense_place"] componentsSeparatedByString:@">"];
         LocationPicker.province_desc = [locationInfo objectAtIndex:0];
         LocationPicker.city_desc = [locationInfo objectAtIndex:1];
-        placeCell.detailTextLabel.text = [record valueForKey:@"expense_place"];
+        //placeCell.detailTextLabel.text = [record valueForKey:@"expense_place"];
+        placeCell.placeTextField.text = [record valueForKey:@"expense_place"];
         
         //初始化日期
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -754,8 +755,9 @@ static NSUInteger MAX_SIZE_JPG = 307200;
             LocationPicker.city_desc = city;
             
             NSString *location = [NSString stringWithFormat:@"%@>%@",province,city];
-            placeCell.detailTextLabel.text = location;
-            placeCell.textLabel.text = @"地点";
+            //placeCell.detailTextLabel.text = location;
+            placeCell.placeTextField.text = location;
+            placeCell.promptLabel.text = @"地点";
 
         }else{
             
@@ -867,7 +869,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 
         if (placeCell == nil)
         {
-            placeCell = [[LMTablePickerInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputCell"];
+            placeCell = [[LMTablePickerInputPlaceCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LMTablePickerInputPlaceCell"];
             placeCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             LocationPicker.cell =placeCell;

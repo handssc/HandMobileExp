@@ -174,7 +174,9 @@
 		B2F98A5319A7287B0064032E /* 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F98A5019A7287B0064032E /* 2@2x.png */; };
 		B2F98A5419A7287B0064032E /* 3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F98A5119A7287B0064032E /* 3@2x.png */; };
 		B2F98A5819A732D50064032E /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F98A5719A732D50064032E /* loading.png */; };
-		D557F7D11A907EF700498DEE /* UItextFieldControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D557F7D01A907EF700498DEE /* UItextFieldControl.m */; };
+		D5EC30B01AA04F18007C2603 /* LMTablePickerInputPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5EC30AE1AA04F18007C2603 /* LMTablePickerInputPlaceCell.m */; };
+		D5EC30B11AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5EC30AF1AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib */; };
+		D5EC30B41AA05089007C2603 /* UItextFieldControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D5EC30B31AA05089007C2603 /* UItextFieldControl.m */; };
 		DA28C45F1972995A00A29412 /* ProvincesAndCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA28C45E1972995A00A29412 /* ProvincesAndCities.plist */; };
 		DA28C47E19729BBC00A29412 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = DA28C46119729BBC00A29412 /* 1.png */; };
 		DA28C47F19729BBC00A29412 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = DA28C46219729BBC00A29412 /* 2.png */; };
@@ -583,8 +585,11 @@
 		B2F98A5019A7287B0064032E /* 2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2@2x.png"; sourceTree = "<group>"; };
 		B2F98A5119A7287B0064032E /* 3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3@2x.png"; sourceTree = "<group>"; };
 		B2F98A5719A732D50064032E /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
-		D557F7CF1A907EF700498DEE /* UItextFieldControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UItextFieldControl.h; sourceTree = "<group>"; };
-		D557F7D01A907EF700498DEE /* UItextFieldControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UItextFieldControl.m; sourceTree = "<group>"; };
+		D5EC30AD1AA04F18007C2603 /* LMTablePickerInputPlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LMTablePickerInputPlaceCell.h; path = Frameworks/LittleMvc/LMTablePickerInputPlaceCell.h; sourceTree = "<group>"; };
+		D5EC30AE1AA04F18007C2603 /* LMTablePickerInputPlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LMTablePickerInputPlaceCell.m; path = Frameworks/LittleMvc/LMTablePickerInputPlaceCell.m; sourceTree = "<group>"; };
+		D5EC30AF1AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LMTablePickerInputPlaceCell.xib; path = Frameworks/LittleMvc/LMTablePickerInputPlaceCell.xib; sourceTree = "<group>"; };
+		D5EC30B21AA05089007C2603 /* UItextFieldControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UItextFieldControl.h; path = Frameworks/LittleMvc/UItextFieldControl.h; sourceTree = "<group>"; };
+		D5EC30B31AA05089007C2603 /* UItextFieldControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UItextFieldControl.m; path = Frameworks/LittleMvc/UItextFieldControl.m; sourceTree = "<group>"; };
 		DA28C45E1972995A00A29412 /* ProvincesAndCities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProvincesAndCities.plist; sourceTree = "<group>"; };
 		DA28C46119729BBC00A29412 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		DA28C46219729BBC00A29412 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
@@ -1449,6 +1454,8 @@
 		B2F864A5196D1E770017D110 /* Static Cells */ = {
 			isa = PBXGroup;
 			children = (
+				D5EC30B21AA05089007C2603 /* UItextFieldControl.h */,
+				D5EC30B31AA05089007C2603 /* UItextFieldControl.m */,
 				B2E3F7711A02390F000C75E3 /* EventKitDataSource.h */,
 				B2E3F7721A02390F000C75E3 /* EventKitDataSource.m */,
 				B2C41C35196E7434007C62BB /* LMTableAmountInputCell.h */,
@@ -1475,8 +1482,9 @@
 				B2EB39F21A1A13C2005CCEF8 /* LMRateFieldCell.xib */,
 				B2EB39F41A1A14AF005CCEF8 /* LMRateFieldCell.h */,
 				B2EB39F51A1A14AF005CCEF8 /* LMRateFieldCell.m */,
-				D557F7CF1A907EF700498DEE /* UItextFieldControl.h */,
-				D557F7D01A907EF700498DEE /* UItextFieldControl.m */,
+				D5EC30AD1AA04F18007C2603 /* LMTablePickerInputPlaceCell.h */,
+				D5EC30AE1AA04F18007C2603 /* LMTablePickerInputPlaceCell.m */,
+				D5EC30AF1AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib */,
 			);
 			name = "Static Cells";
 			sourceTree = "<group>";
@@ -1723,6 +1731,7 @@
 				B29D95BE196595EB0017A9B7 /* EXPLoginViewController.xib in Resources */,
 				DAE6BBB7198F17230016EA52 /* submitted.png in Resources */,
 				DA9F030119824120002E486A /* previousButton@2x.png in Resources */,
+				D5EC30B11AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib in Resources */,
 				DA9F330219889160008B26C4 /* leftDate@2x.png in Resources */,
 				DA28C48E19729BBC00A29412 /* navigationBg@2x.png in Resources */,
 				DA9F030019824120002E486A /* previousButton.png in Resources */,
@@ -1898,6 +1907,7 @@
 				3BE36FC01A5A2C1F0032299E /* FMDatabaseAdditions.m in Sources */,
 				B2064DA01987CD8200856B30 /* CompositeXmlParser.m in Sources */,
 				B2EF36221972DE5E00C80DAA /* EXPDetailModel.m in Sources */,
+				D5EC30B01AA04F18007C2603 /* LMTablePickerInputPlaceCell.m in Sources */,
 				B2A2D9411965352700B2C935 /* NSArrayAdditions.m in Sources */,
 				B2676E4C197DF38A00F58C07 /* EXPSubmitDetailModel.m in Sources */,
 				B26AD26F1962D2200081152F /* main.m in Sources */,
@@ -1921,7 +1931,6 @@
 				3BE36FC31A5A2C1F0032299E /* FMResultSet.m in Sources */,
 				B298E2B11963A05500EB4850 /* AFURLResponseSerialization.m in Sources */,
 				B29D969419669E0B0017A9B7 /* EXPFunctionListDatasource.m in Sources */,
-				D557F7D11A907EF700498DEE /* UItextFieldControl.m in Sources */,
 				B20D10A6196BDFA0004871F4 /* LMDataBaseModel.m in Sources */,
 				B269E51C1972F2DB001313DD /* LMCellStypeItem.m in Sources */,
 				B25C27C5197FD1AF005E9878 /* LMSimpleProgress.m in Sources */,
@@ -1933,6 +1942,7 @@
 				B2861F88197F538000C7F506 /* RotatedView.m in Sources */,
 				DA83CB2B198635EE00BBBEA0 /* LMDetailListTableViewCell.m in Sources */,
 				B269E5181972F209001313DD /* LMCellStype.m in Sources */,
+				D5EC30B41AA05089007C2603 /* UItextFieldControl.m in Sources */,
 				B29D960E196649F40017A9B7 /* RECommonFunctions.m in Sources */,
 				B2A2D94A19654A7D00B2C935 /* LMRequestModel.m in Sources */,
 				B2A2D96C1965889300B2C935 /* MMProgressHUDViewController.m in Sources */,

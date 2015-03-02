@@ -64,7 +64,7 @@
             citys = [[provinces objectAtIndex:row] objectForKey:@"Cities"];
             
             if(province_desc!=nil && city_desc !=nil){
-                self.cell.detailTextLabel.text= [[province_desc stringByAppendingString:@">"] stringByAppendingString:city_desc];
+                self.cell.placeTextField.text= [[province_desc stringByAppendingString:@">"] stringByAppendingString:city_desc];
                 
             }
             
@@ -74,7 +74,7 @@
         case 1:
             city_desc = [[citys objectAtIndex:row] objectForKey:@"city"];
             if(province_desc!=nil && city_desc !=nil){
-                self.cell.detailTextLabel.text= [[province_desc stringByAppendingString:@">"] stringByAppendingString:city_desc];
+                self.cell.placeTextField.text= [[province_desc stringByAppendingString:@">"] stringByAppendingString:city_desc];
                 
             }
 
