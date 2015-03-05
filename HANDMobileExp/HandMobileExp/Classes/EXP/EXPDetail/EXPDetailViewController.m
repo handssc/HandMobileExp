@@ -16,7 +16,8 @@
 #import "EXPQueryViewController.h"
 
 @interface EXPDetailViewController ()
-@property NSInteger amount;
+
+@property NSInteger amount;                         // 金额
 @property (nonatomic, strong)UILabel *sumLabel;
 @property (strong, nonatomic)UILabel *sumMoneyLabel;
 
@@ -48,6 +49,19 @@
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
 
+    // 导航
+    [self createUI_navigation];
+    
+    // 统计
+    [self createUI_statistic];
+    
+}
+
+#pragma mark -
+#pragma mark createUI
+
+// 导航部分
+- (void) createUI_navigation {
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     self.title = @"报销明细";
@@ -55,14 +69,18 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(returnHomePage:)];
     
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addDetailPage:)];
+    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addDetailPage:)];
     UIBarButtonItem * adddetailpage =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addDetailPage:)];
-
-   UIBarButtonItem * queryBar =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(querypage:)];
+    UIBarButtonItem * queryBar =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(querypage:)];
     
     self.navigationItem.rightBarButtonItems =[NSArray arrayWithObjects:adddetailpage, nil];
     
     self.view.backgroundColor = [UIColor colorWithRed:0.561 green:0.380 blue:0.201 alpha:1.000];
+}
+
+
+// 统计总览
+- (void) createUI_statistic {
     
     self.sumMoneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(160.0, self.view.bounds.size.height * 0.03, 150.0, 30.0)];
     
@@ -78,6 +96,8 @@
 }
 
 #pragma mark - button delegate
+
+// 添加
 - (void)addDetailPage:(id *)sender
 {
    EXPLineModelDetailViewController *detail =  [[EXPLineModelDetailViewController alloc]initWithNibName:nil bundle:nil];
@@ -85,12 +105,14 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 
+// 查询
 -(void)querypage:(id *)sender
 {
      EXPQueryViewController *queryview =  [[EXPQueryViewController alloc]initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:queryview animated:YES];
 }
 
+// 返回
 - (void)returnHomePage:(id *)sender
 {
     if(self.homeList != nil){
@@ -105,7 +127,7 @@
 
 
 
--(UITableView *)tableView{
+- (UITableView *)tableView{
     
     if(_tableView == nil){
     _tableView = ({
@@ -141,6 +163,7 @@
         
        // sumMoneyAmount = sumMoneyAmount + [[record objectForKey:@"expense_amount"]floatValue]
         //* [[record objectForKey:@"expense_number"] integerValue];
+        NSLog(@"create by %@", [record objectForKey:@"CREATED_BY"]);
         
         sumMoneyAmount += [[record objectForKey:@"total_amount"] doubleValue];
     }

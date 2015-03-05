@@ -225,7 +225,7 @@
     CGRect frame = _placeTextField.frame;
     //int offset = frame.origin.y + 32 - (self.contentView.frame.size.height - 216.0);//键盘高度216
     
-    int offset = frame.origin.y + 32 - (self.contentView.frame.size.height - 56.0);//键盘高度216
+    int offset = frame.origin.y + 32 - (self.contentView.frame.size.height - 116.0);//键盘高度216
 
     
     NSTimeInterval animationDuration = 0.30f;

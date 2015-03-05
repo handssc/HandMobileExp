@@ -69,7 +69,8 @@
             
             [values appendString:@"*"];
         }
-        [values appendFormat:@" FROM %@ ",tableName];
+        [values appendFormat:@" FROM %@ WHERE created_by = '%@'",tableName,
+                [[NSUserDefaults standardUserDefaults] valueForKey:@"username"]];
         
     } else if([action isEqualToString:@"UPDATE"]){
         [values appendFormat:@" %@ SET ",tableName];
@@ -168,14 +169,14 @@
 //查询MOBILE_EXP_REPORT_LINE
 -(FMResultSet *)QUERY_MOBILE_EXP_REPORT_LINE:(FMDatabase *)db{
     
-    NSString *currentSql = @"SELECT * FROM MOBILE_EXP_REPORT_LINE  WHERE local_status = 'new' ";// WHERE STATUS != 'WAITING'
+    NSString *currentSql = [NSString stringWithFormat: @"SELECT * FROM MOBILE_EXP_REPORT_LINE  WHERE local_status = 'new' and created_by = '%@' ",[[NSUserDefaults standardUserDefaults] valueForKey:@"username"]];// WHERE STATUS != 'WAITING'
     
     return [db executeQuery:currentSql];
 }
 
 -(FMResultSet *)QUERYALL_MOBILE_EXP_REPORT_LINE:(FMDatabase *)db{
     
-    NSString *currentSql = @"SELECT * FROM MOBILE_EXP_REPORT_LINE ";// WHERE STATUS != 'WAITING'
+    NSString *currentSql = [NSString stringWithFormat: @"SELECT * FROM MOBILE_EXP_REPORT_LINE WHERE created_by = '%@'", [[NSUserDefaults standardUserDefaults] valueForKey:@"username"]];// WHERE STATUS != 'WAITING'
     
     return [db executeQuery:currentSql];
 }
@@ -186,10 +187,8 @@
 -(FMResultSet *)QUERY_MOBILE_EXP_REPORT_LINE:(FMDatabase *)db
                                        param:(NSDictionary *)param
 {
-
-    
-  NSString *currentSql =   [self creatCRUDSqlWithTableName:@"MOBILE_EXP_REPORT_LINE" params:nil keys:[param allKeys] action:@"SELECT"];
-
+    NSString *currentSql =   [self creatCRUDSqlWithTableName:@"MOBILE_EXP_REPORT_LINE" params:nil keys:[param allKeys] action:@"SELECT"];
+    NSLog(@"sql %@", currentSql);
     
     return [db executeQuery:currentSql withParameterDictionary:param];
 }
@@ -239,7 +238,7 @@
 
 -(FMResultSet *)QUERY_MOBILE_EXP_SUM:(FMDatabase *)db{
     
-    NSString *currentSql = @"SELECT * FROM MOBILE_EXP_REPORT_LINE ";// WHERE STATUS != 'WAITING'
+    NSString *currentSql = [NSString stringWithFormat: @"SELECT * FROM MOBILE_EXP_REPORT_LINE WHERE created_by = '%@'", [[NSUserDefaults standardUserDefaults] valueForKey:@"username"] ];// WHERE STATUS != 'WAITING'
     
     return [db executeQuery:currentSql];
 }

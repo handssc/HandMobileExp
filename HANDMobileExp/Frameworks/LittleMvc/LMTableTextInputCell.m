@@ -32,7 +32,7 @@
 	
 	self.numberLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithFloat:self.numberValue]];
     
-    _amountTextFieldControl = [[UItextFieldControl alloc] initWithRadixPointNum:2 length:10 ];
+    _amountTextFieldControl = [[UItextFieldControl alloc] initWithRadixPointNum:2 length:9 ];
     _numberTextFieldControl = [[UItextFieldControl alloc] initWithRadixPointNum:0 length:5 ];
 
     
