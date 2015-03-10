@@ -33,5 +33,6 @@
 @property (nonatomic, strong) NSDate * dateFromValue;
 @property (nonatomic, strong) NSDate * dateToValue;
 
+@property (nonatomic, assign) BOOL modifiedFlag;
 
 @end

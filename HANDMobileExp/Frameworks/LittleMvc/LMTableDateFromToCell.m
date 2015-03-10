@@ -82,6 +82,7 @@
     
     
 	if (selected) {
+        self.modifiedFlag = YES;
         [self.parent.navigationController pushViewController:kal animated:YES];
 	}
 }

@@ -40,6 +40,7 @@
 	self.keyboardType = UIKeyboardTypeDecimalPad;
 	self.lowerLimit = 0;//最小为0
 	self.upperLimit = 1000000000; //最大允许9位
+    self.modifiedFlag = NO;
 	
     dotBeginFlag = NO;
     firstInput = YES;
@@ -77,6 +78,7 @@
 
 #pragma img press delegate
 -(void)buttonpress{
+    self.modifiedFlag = YES;
     //当显示照片没有的情况下，是拍照
     if(self.img.image == nil){
 

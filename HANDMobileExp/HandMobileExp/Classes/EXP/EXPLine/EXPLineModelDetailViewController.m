@@ -31,7 +31,7 @@
     
     LMTableAmountInputCell *amountCell;             // 金额
     LMTablePickerInputCell *expenseTypeCell;        // 费用类型
-    LMTablePickerInputPlaceCell *placeCell;              // 地点
+    LMTablePickerInputPlaceCell *placeCell;         // 地点
     LMTableTextInputCell *numberCell;               // 数量
     
     LMRateFieldCell  * rateCell;                    // 费率
@@ -134,6 +134,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         submitView.frame = CGRectMake(60.0, self.view.bounds.size.height*0.6, self.view.bounds.size.width - 120.0, 100.0);
         [self.view addSubview:submitView];
         
+        //NSLog(@"Frame: (%.2f, %.2f, %.2f, %.2f)", self.coverView.frame.origin.x, self.coverView.frame.origin.y, self.coverView.frame.size.width, self.coverView.frame.size.height);
+
         [self.view addSubview:self.coverView];
     }
     
@@ -229,6 +231,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 -(UIView *)coverView
 {
     self.coverView = [[UIView alloc]initWithFrame:self.view.bounds];
+    //self.coverView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, self.view.bounds.size.height, self.view.bounds.size.width)];
     return _coverView;
 }
 
@@ -281,9 +284,28 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     //self.save.showsTouchWhenHighlighted  = NO;
 }
 
+#pragma mark modify setting
+
 // 修改后，改变保存按钮颜色
-- (void)showModified {
-    [self.save setBackgroundColor:[UIColor colorWithRed:241.0f/255.0f green:147.0f/255.0f blue:31.0f/255.0f alpha:0.780]];
+- (void)showModified: (BOOL)highLightFlag {
+    if (highLightFlag == YES) {
+        [self.save setBackgroundColor:[UIColor colorWithRed:241.0f/255.0f green:147.0f/255.0f blue:31.0f/255.0f alpha:0.780]];
+
+    } else {
+        self.save.backgroundColor  = [UIColor colorWithRed:113.0f/255 green:113.0f/255  blue:113.0f/255  alpha:0.780];
+    }
+}
+
+// 修改检查
+- (void)modifiedCheck {
+    BOOL ret = NO;
+    ret = numberCell.modifiedFlag || rateCell.modifiedFlag ||expenseTypeCell.modifiedFlag ||placeCell.modifiedFlag ||amountCell.modifiedFlag;
+    if (ret == YES) {
+        [self showModified:YES];
+    } else {
+        [self showModified:NO];
+    }
+    
 }
 
 #pragma mark CheckData
@@ -445,6 +467,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     }
     
     [LMAlertViewTool showAlertView:@"提示" message:@"保存成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [self showModified:NO];
 }
 
 
@@ -619,11 +642,23 @@ static NSUInteger MAX_SIZE_JPG = 307200;
     
     
         // 增加 观察依赖关系 总额 依赖于 金额 数量 汇率
+    
+        //--------
         [numberCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
         //[amountCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    
+        //------
         [numberCell addObserver:self forKeyPath:@"amountValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
   
         [rateCell addObserver:self forKeyPath:@"numberValue" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    
+        // 界面数值修改监测
+        [numberCell addObserver:self forKeyPath:@"modifiedFlag" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        [rateCell addObserver:self forKeyPath:@"modifiedFlag" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    [expenseTypeCell addObserver:self forKeyPath:@"modifiedFlag" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    [placeCell addObserver:self forKeyPath:@"modifiedFlag" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    [amountCell addObserver:self forKeyPath:@"modifiedFlag" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+
     
 
 }
@@ -774,6 +809,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 -(void) reloadRateCell:(NSString *)currency
           exchangeRate:(NSNumber *  )exchangRate
 {
+    rateCell.modifiedFlag = YES;
+    [self modifiedCheck];
     //初始化汇率 币种
     rateCell.exchangRateLabel.text = [NSString  stringWithFormat:@"%.4f",[exchangRate doubleValue]];
     rateCell.numberValue = [exchangRate doubleValue];
@@ -788,8 +825,6 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     
-   // NSLog(@"amountCell is %@", keyPath);
-
     if([keyPath isEqualToString:@"numberValue"] || [keyPath isEqualToString:@"amountValue"])
     {
 
@@ -809,6 +844,15 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         }
         //*/
         //amountCell.amount.text
+    }
+    
+    if ([keyPath isEqualToString:@"modifiedFlag"]) {
+        if(!insertFlag && updateFlag){
+            NSLog(@"line modifiedFlag %@", numberCell.modifiedFlag?@"YES":@"NO");
+            [self modifiedCheck];
+        
+        }
+
     }
     
     
@@ -1037,6 +1081,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 }
 
 - (void)done:(id)sender {
+    [self showModified:YES];
+    
     CGFloat y;
      if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
           y = 64;
@@ -1085,6 +1131,7 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 //输入框编辑完成以后，将视图恢复到原始状态
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
+
     CGFloat y;
     if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
         y = 64;

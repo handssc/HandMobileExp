@@ -30,7 +30,7 @@
 
 @property (nonatomic,assign) double amountValue;        // 金额
 @property (nonatomic,assign) double numberValue;        // 数量
-
+@property (nonatomic,assign) BOOL modifiedFlag;
 
 
 

@@ -15,7 +15,7 @@
 }
 
 @property (nonatomic, strong) UIPickerView *picker;
-
+@property (nonatomic, assign) BOOL modifiedFlag;
 
 
 

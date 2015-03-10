@@ -23,6 +23,7 @@
     self.picker.frame = CGRectMake(0, 84, 320, 100);
     
     self.picker.showsSelectionIndicator = YES;
+    self.modifiedFlag = NO;
 	
 
 }
@@ -72,6 +73,7 @@
 
 - (void)done:(id)sender {
 	[self resignFirstResponder];
+    self.modifiedFlag = YES;
 }
 
 - (BOOL)becomeFirstResponder {

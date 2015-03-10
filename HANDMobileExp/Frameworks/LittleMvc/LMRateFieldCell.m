@@ -194,6 +194,7 @@
 			self.exchangRateLabel.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
             //            NSLog(@"text is %@,value is %d text length is %d",self.amount.text,self.numberValue,self.amount.text.length);
 			valueChanged = YES;
+            [self setModifiedFlag:YES];
 		}
 	}
     
@@ -203,7 +204,7 @@
 // 退格
 - (void)deleteBackward {
 
-    
+    [self setModifiedFlag:YES];
     if(firstInput){
         firstInput = NO;
         self.numberValue = 0.0f;
@@ -243,6 +244,10 @@
     valueChanged = YES;
     
     
+}
+
+- (void)setModified:(BOOL)modifiedFlag {
+    self.modifiedFlag = modifiedFlag;
 }
 
 

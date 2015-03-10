@@ -479,6 +479,7 @@ static NSString *tableViewCellIdentifier = @"MyCells";
             //*[[record objectForKey:@"expense_number"] integerValue];
             todaySumTotal += [ [record objectForKey:@"total_amount"] doubleValue ];
         }
+
         
     }
     self.weekSum = [NSString stringWithFormat:@"¥%2.2f",weekSumTotal];

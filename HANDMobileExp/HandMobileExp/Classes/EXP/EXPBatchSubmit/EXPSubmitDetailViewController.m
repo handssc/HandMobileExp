@@ -144,7 +144,7 @@
             
             if([recordId integerValue] == [key integerValue]){
                 
-               NSNumber * expense_amount=  [record valueForKey:@"expense_amount"];
+                NSNumber * expense_amount=  [record valueForKey:@"expense_amount"];
                 NSString *  expenseAmount = [NSString stringWithFormat:@"%.2f",[expense_amount floatValue]];
                 NSNumber  * exchange_rate = [record valueForKey:@"exchangeRate"];
                 

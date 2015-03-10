@@ -3,6 +3,7 @@
 //  HandMobileExp
 //
 //  Created by jiangtiteng on 14-8-8.
+//  Modified by 吴笑诚 on 15-3-5
 //  Copyright (c) 2014年 hand. All rights reserved.
 //
 
@@ -23,6 +24,7 @@
 	self.upperLimit = 1000000000; //最大允许9位
     self.numberValue = 1;
     self.amountValue = 0;
+    self.modifiedFlag = NO;
     	
 	if (!self.numberFormatter) {
 		self.numberFormatter = [[NSNumberFormatter alloc] init];
@@ -70,6 +72,8 @@
     _amountTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.amountValue]];
     NSLog(@"amout: %f", self.amountValue);
     NSLog(@"number: %f", self.numberValue);
+    self.modifiedFlag = YES;
+    //NSLog(@"numberCell modifiedFlag %@", _modifiedFlag?@"YES":@"NO");
     [sender resignFirstResponder];
 
 
@@ -81,6 +85,10 @@
     NSLog(@"amout: %f", self.amountValue);
 
     NSLog(@"number: %f", self.numberValue);
+    self.modifiedFlag = YES;
+    //NSLog(@"numberCell modifiedFlag %@", _modifiedFlag?@"YES":@"NO");
+
+
     [sender resignFirstResponder];
 
 

@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *promptLabel;
 @property (weak, nonatomic) IBOutlet UIButton *changeInputButton;
 @property (nonatomic, strong) UIPickerView *picker;
+@property (nonatomic, assign) BOOL modifiedFlag;
 
 - (IBAction)changeInputButtonPressed:(UIButton *)sender;
 

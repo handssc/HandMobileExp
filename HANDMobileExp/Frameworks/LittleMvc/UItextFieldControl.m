@@ -10,8 +10,7 @@
 
 @implementation UItextFieldControl
 
-
-- (id) initWithRadixPointNum: (NSInteger)radixPointLength length: (NSInteger) numLength {
+- (id) initWithRadixPointNum:(NSInteger)radixPointLength length:(NSInteger)numLength {
     if  (self = [super init]) {
 
         _RadixPointNum = radixPointLength;

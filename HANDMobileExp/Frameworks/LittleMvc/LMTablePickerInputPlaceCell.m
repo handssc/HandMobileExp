@@ -43,6 +43,7 @@
         self = [nibArray objectAtIndex:0];
         _placeTextField.delegate = self;
         _canPlaceInput = NO;
+        self.modifiedFlag = NO;
     
         [self initalizeInputView];
     }
@@ -92,6 +93,7 @@
 
     //[self resignFirstResponder];
     [_placeTextField resignFirstResponder];
+    self.modifiedFlag = YES;
 }
 /*
 - (BOOL)becomeFirstResponder {

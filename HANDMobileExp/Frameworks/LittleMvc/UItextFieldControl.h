@@ -13,6 +13,9 @@
 @property (nonatomic, assign) BOOL isHasRadixPoint;
 @property (nonatomic, assign) NSInteger RadixPointNum;      // 小数位数量
 @property (nonatomic, assign) NSInteger decimalNumMax;      // 最大数位长度 包括小数点
+
+@property (nonatomic, strong) UIControl* parent;
+
 //@property (nonatomic, assign) double numberValue;
 
 - (id) initWithRadixPointNum: (NSInteger)radixPointLength length: (NSInteger) numLength ;

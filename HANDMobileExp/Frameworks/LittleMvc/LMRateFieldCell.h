@@ -29,6 +29,8 @@
 @property(nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic, strong) NSNumberFormatter *numberFormatter;
 
+@property (nonatomic, assign) BOOL modifiedFlag;
+
 @property (nonatomic,strong)EXPLineModelDetailViewController * parent;
 
 @end
