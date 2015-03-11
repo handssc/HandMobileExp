@@ -71,6 +71,8 @@
         self.img.userInteractionEnabled = YES;
         [self.img addGestureRecognizer:singleTap];
         
+        self.readOnlyFlag = NO;
+        
         
     }
     return self;
@@ -82,21 +84,26 @@
     //当显示照片没有的情况下，是拍照
     if(self.img.image == nil){
 
-  
-         imagesheet = [[ImagePickerActionSheet alloc] initWithView:self.tv delegate:self];
+        if (self.readOnlyFlag == NO) {
+            imagesheet = [[ImagePickerActionSheet alloc] initWithView:self.tv delegate:self];
+            
+            
+            
+            _photowrapper = [[MWPhotoBrowserWraper alloc] initWithViewController:self.tv delegate:self readOnly:self.readOnlyFlag];
+            
+            
+            [imagesheet showActionSheet];
+        }
 
-    
         
-        _photowrapper = [[MWPhotoBrowserWraper alloc] initWithViewController:self.tv delegate:self];
-
-
-        [imagesheet showActionSheet];
+        
         
     }else {
         //每次都进行初始化，因为该组建无法复用
-        _photowrapper = [[MWPhotoBrowserWraper alloc] initWithViewController:self.tv delegate:self];
+        _photowrapper = [[MWPhotoBrowserWraper alloc] initWithViewController:self.tv delegate:self readOnly:self.readOnlyFlag];
         
         [_photowrapper showWithPush];
+        
         
         
     }
@@ -124,6 +131,11 @@
     
 }
 
+
+- (void) setPhotoReadOnly {
+    NSLog(@"setPhotoReadOnly");
+    self.readOnlyFlag = YES;
+}
 
 ///////////////MWPhotoBrowserDelegate/////////////////
 #pragma mark - MWPhotoBrowserDelegate

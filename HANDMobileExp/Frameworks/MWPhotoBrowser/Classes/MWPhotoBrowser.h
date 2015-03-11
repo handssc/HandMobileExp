@@ -58,6 +58,9 @@
 @property (nonatomic) NSUInteger delayToHideElements;
 @property (nonatomic, readonly) NSUInteger currentIndex;
 
+//add by 吴笑诚
+@property (nonatomic, assign) BOOL readOnly;
+
 
 
 // Init

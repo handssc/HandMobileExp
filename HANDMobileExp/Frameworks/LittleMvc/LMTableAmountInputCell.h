@@ -41,7 +41,6 @@
 }
 
 
-
 @property (nonatomic, assign) double numberValue;
 @property (nonatomic, assign) double lowerLimit;
 @property (nonatomic, assign) NSUInteger upperLimit;
@@ -63,11 +62,15 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *img;
 
+@property (nonatomic, assign) BOOL readOnlyFlag;
+
 
 @property (strong, nonatomic) UIViewController *tv;
 
 
 @property (strong,nonatomic) NSMutableArray * imageArray;
+
+- (void) setPhotoReadOnly;
 
 
 @end

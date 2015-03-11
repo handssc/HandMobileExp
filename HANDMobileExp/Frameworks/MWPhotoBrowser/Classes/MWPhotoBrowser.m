@@ -86,6 +86,9 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
+    
+    _readOnly = NO;
+    
     ipcikersheet = [[ImagePickerActionSheet1 alloc] initWithView:self delegate:self];
     
     // Listen for MWPhoto notifications
@@ -232,9 +235,14 @@
         }
         self.navigationItem.rightBarButtonItem = _doneButton;
     } else {
-        //添加一个按钮用来拍照
-        _addPicButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPic:)];
-        self.navigationItem.rightBarButtonItem = _addPicButton;
+        
+        if (_readOnly == NO) {
+            //添加一个按钮用来拍照
+            _addPicButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPic:)];
+            self.navigationItem.rightBarButtonItem = _addPicButton;
+        }
+
+        
         
         // We're not first so show back button
         UIViewController *previousViewController = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];

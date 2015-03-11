@@ -65,6 +65,7 @@
 -(void) param:(NSDictionary *)param
           url:(NSString *)url
 {
+    //NSLog(@"url %@",url);
     [self didStartLoad];
     
     [self.utl success:^(AFHTTPRequestOperation *operation,id responseObject){

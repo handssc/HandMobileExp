@@ -125,6 +125,13 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         [self reload];
     }
     
+
+    
+    //init tableview cell
+    [self buildCellView];
+    //[self initCellView:true];
+    [self initCellView:YES];
+    
     if (readOnlyFlag) {
         
         self.upload.hidden = YES;
@@ -134,15 +141,14 @@ static NSUInteger MAX_SIZE_JPG = 307200;
         submitView.frame = CGRectMake(60.0, self.view.bounds.size.height*0.6, self.view.bounds.size.width - 120.0, 100.0);
         [self.view addSubview:submitView];
         
-        //NSLog(@"Frame: (%.2f, %.2f, %.2f, %.2f)", self.coverView.frame.origin.x, self.coverView.frame.origin.y, self.coverView.frame.size.width, self.coverView.frame.size.height);
-
+        NSLog(@"Frame: (%.2f, %.2f, %.2f, %.2f)", self.coverView.frame.origin.x, self.coverView.frame.origin.y, self.coverView.frame.size.width, self.coverView.frame.size.height);
+        
         [self.view addSubview:self.coverView];
+        
+        [amountCell setPhotoReadOnly];
+        
+        
     }
-    
-    //init tableview cell
-    [self buildCellView];
-    //[self initCellView:true];
-    [self initCellView:YES];
     
 }
 
@@ -230,8 +236,8 @@ static NSUInteger MAX_SIZE_JPG = 307200;
 #pragma mark - private
 -(UIView *)coverView
 {
-    self.coverView = [[UIView alloc]initWithFrame:self.view.bounds];
-    //self.coverView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, self.view.bounds.size.height, self.view.bounds.size.width)];
+    //self.coverView = [[UIView alloc]initWithFrame:self.view.bounds];
+    self.coverView = [[UIView alloc]initWithFrame:CGRectMake(0, amountCell.bounds.size.height-5, self.view.bounds.size.height, self.view.bounds.size.width)];
     return _coverView;
 }
 

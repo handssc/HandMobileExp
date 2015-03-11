@@ -19,10 +19,12 @@
 @property (nonatomic,strong)UIViewController * viewcontroller;
 
 @property (nonatomic,strong)MWPhotoBrowser * browser;
+@property (nonatomic, assign) BOOL readOnlyFalg;
 
 -(id)initWithViewController:(UIViewController *)viewcontroller
-                   delegate:(id<MWPhotoBrowserDelegate>)delegate;
+                   delegate:(id<MWPhotoBrowserDelegate>)delegate readOnly: (BOOL) readOnlyFlag;
 
 
 -(void)showWithPush;
+
 @end
