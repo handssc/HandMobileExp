@@ -16,7 +16,11 @@
 }
 
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+/* del by wuxiaocheng
 @property (weak, nonatomic) IBOutlet UILabel *sumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sumMoneyLabel;
+ 
+*/
 
 @end

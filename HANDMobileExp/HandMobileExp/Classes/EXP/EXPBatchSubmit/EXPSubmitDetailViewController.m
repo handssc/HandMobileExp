@@ -24,10 +24,10 @@
     EXPSubmitDetailModel * datamodel;
     
     //组件
-    UIButton  * btn;
+    UIButton  * btn;    // 按钮 暂时弃用
     
     //
-    int selectRecord;
+    int selectRecord;   // 选中记录
     
     //
     BOOL httpFaild;
@@ -43,20 +43,24 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        ///*
         //手动塞入依赖关系，以后会使用ioc
         EXPSubmitDetailDataSource * tv =  [[EXPSubmitDetailDataSource alloc] init];
         tv.DetailTvC = self;
         self.dataSource  = tv;
+        
+        
         //model
         datamodel = tv.model;
-        
+        //*/
+         
         httpmodel = [[EXPSubmitHttpModel alloc] init];
         [httpmodel.delegates addObject:self];
         
         selectRecord = 0;
         httpFaild = NO;
         
-
+        // 上传
         UIImage *checkList = [UIImage imageNamed:@"submit"];
         self.navigationItem.rightBarButtonItem =
         [[UIBarButtonItem alloc] initWithImage:checkList style:UIBarButtonItemStylePlain target:self action:@selector(submit:)];
@@ -80,12 +84,15 @@
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
     
+    /* del by 吴笑诚
     //按钮
     btn  =  [[UIButton alloc] initWithFrame:CGRectMake(50, self.view.bounds.size.height *0.7, 220, 50)];
     [btn  setTitle:@"批量提交" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor colorWithRed:0.780 green:0.805 blue:0.555 alpha:0.670]];
     [btn  addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:btn];
+     
+     */
     
     //[_tableView setEditing:YES animated:YES];
     //使能选中
@@ -96,7 +103,7 @@
     
     
     //important 解决7.1超过边框问题 
-    _tableView.allowsSelectionDuringEditing = YES;
+    //_tableView.allowsSelectionDuringEditing = YES;
     
     
     
@@ -104,8 +111,6 @@
     
     self.title = @"批量上传";
     self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.297 blue:0.199 alpha:0.840];
-    
-    
     
     
     
@@ -121,7 +126,7 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 
-#pragma private
+#pragma mark private
 - (void)returnHomePage:(id *)sender
 {
     
@@ -241,13 +246,14 @@
     if(_tableView == nil){
 
     _tableView = ({
-       UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        //UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height-64)];
         
 //        tableView.backgroundColor = [UIColor colorWithRed:0.876 green:0.874 blue:0.760 alpha:1.0];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.backgroundView = nil;
-        tableView.tableFooterView = [[UIView alloc]init];
-        tableView.tableHeaderView = [[UIView alloc]init];
+        //tableView.tableFooterView = [[UIView alloc]init];
+        //tableView.tableHeaderView = [[UIView alloc]init];
         tableView;
     });
     }

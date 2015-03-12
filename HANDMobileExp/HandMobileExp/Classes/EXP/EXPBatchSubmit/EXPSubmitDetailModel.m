@@ -11,12 +11,15 @@
 #import "LMCellStypeItem_1.h"
 #import "EXPLineModelDetailViewController.h"
 
+
+#pragma mark -
+#pragma mark EXPSubmitDetailModel
+
 @implementation EXPSubmitDetailModel
+
 -(id)init{
     self = [super init];
     if(self){
-        
-        
         
     }
     
@@ -37,6 +40,10 @@
 }
 
 @end
+
+
+#pragma mark -
+#pragma mark EXPSubmitHttpModel
 
 @implementation EXPSubmitHttpModel
 
@@ -85,6 +92,11 @@
 
 
 @end
+
+
+
+#pragma mark -
+#pragma mark EXPSubmitDetailDataSource
 
 @implementation EXPSubmitDetailDataSource
 

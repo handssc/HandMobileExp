@@ -32,9 +32,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         //手动塞入依赖关系，以后会使用ioc
-        EXPDetailDataSource * tv =  [[EXPDetailDataSource alloc] init];
-        tv.DetailTvC = self;
-        self.dataSource  = tv;
+        EXPDetailDataSource * tvds =  [[EXPDetailDataSource alloc] init];
+        tvds.DetailTvC = self;
+        self.dataSource  = tvds;
     }
     return self;
 }
@@ -54,6 +54,7 @@
     
     // 统计
     [self createUI_statistic];
+
     
 }
 

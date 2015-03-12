@@ -10,10 +10,21 @@
 #import "LMSectioneDataSource.h"
 #import  "AFNetRequestModel.h"
 
+
+/******************************
+    EXPSubmitDetailModel
+ ******************************/
+
 @interface EXPSubmitDetailModel : FMDataBaseModel
+
 -(void)update:(NSArray *)param;
+
 @end
 
+
+/******************************
+        EXPSubmitHttpModel
+ ******************************/
 @interface EXPSubmitHttpModel :AFNetRequestModel
 
 -(void)postLine:(NSDictionary *)parm;
@@ -31,7 +42,13 @@
 -(void)upload:(NSDictionary *)param;
 @end
 
+
+/******************************
+    EXPSubmitDetailDataSource
+ ******************************/
+
 @interface EXPSubmitDetailDataSource :LMSectioneDataSource
+
 @property (nonatomic,strong)UIViewController * DetailTvC;
 
 @end
