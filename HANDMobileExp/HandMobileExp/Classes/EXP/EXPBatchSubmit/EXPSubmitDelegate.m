@@ -36,6 +36,8 @@
     
     [self.selectIndex addObject:item.primary_id];
     
+    //NSLog(@"cell select");
+    
 }
 
 

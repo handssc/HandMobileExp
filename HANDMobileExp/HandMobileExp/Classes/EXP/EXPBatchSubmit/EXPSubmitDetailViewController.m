@@ -13,6 +13,7 @@
 #import "AFNetRequestModel.h"
 #import "MMProgressHUDWindow.H"
 
+
 @interface EXPSubmitDetailViewController (){
     //点击代理
     EXPSubmitDelegate * delegate;
@@ -31,6 +32,8 @@
     
     //
     BOOL httpFaild;
+    
+
     
     
 }
@@ -71,6 +74,7 @@
 //        [btn setBackgroundColor:[UIColor colorWithRed:0.780 green:0.805 blue:0.555 alpha:0.670]];
 //        [btn  addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchDown];
 //        [self.view addSubview:btn];
+        
 
     }
     return self;
@@ -110,15 +114,153 @@
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     self.title = @"批量上传";
-    self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.297 blue:0.199 alpha:0.840];
     
     
     
+    [self createUI_statistic];
     
     
 }
 
+// 统计总览
+- (void) createUI_statistic {
+    
+    // Buuton selecAll
+    self.selectAllButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0, self.view.bounds.size.height * 0.02, 70.0, 30.0)];
+    
+    [self.selectAllButton setTitle:@"全选" forState: UIControlStateNormal];
+    [self.selectAllButton.layer setCornerRadius:6.0f];
+    self.selectAllButton.showsTouchWhenHighlighted = YES;
+    self.selectAllButton.titleLabel.font =[UIFont fontWithName:@"Helvetica" size:20.0f];
+    self.selectAllButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.selectAllButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.selectAllButton addTarget:self action:@selector(selectAllButtonPressed:) forControlEvents:UIControlEventTouchDown];
+
+    
+    // Button cancelSelectAll
+    self.cancelSelectAllButton = [[UIButton alloc]initWithFrame:CGRectMake(70.0, self.view.bounds.size.height * 0.02, 70.0, 30.0)];
+    [self.cancelSelectAllButton setTitle:@"全不选" forState: UIControlStateNormal];
+    [self.cancelSelectAllButton.layer setCornerRadius:6.0f];
+    self.cancelSelectAllButton.showsTouchWhenHighlighted = YES;
+    self.cancelSelectAllButton.titleLabel.font =[UIFont fontWithName:@"Helvetica" size:20.0f];
+    self.cancelSelectAllButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.cancelSelectAllButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.cancelSelectAllButton addTarget:self action:@selector(cancelSelectAllButtonPressed:) forControlEvents:UIControlEventTouchDown];
+    
+    // Button selectPageButton
+    self.selectPageButton = [[UIButton alloc]initWithFrame:CGRectMake(150.0, self.view.bounds.size.height * 0.02, 70.0, 30.0)];
+    [self.selectPageButton setTitle:@"本页" forState: UIControlStateNormal];
+    [self.selectPageButton.layer setCornerRadius:6.0f];
+    self.selectPageButton.showsTouchWhenHighlighted = YES;
+    self.selectPageButton.titleLabel.font =[UIFont fontWithName:@"Helvetica" size:20.0f];
+    self.selectPageButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.selectPageButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.selectPageButton addTarget:self action:@selector(selectPageButtonPressed:) forControlEvents:UIControlEventTouchDown];
+    
+    //Button cancelSelectPageButton
+    self.cancelSelectPageButton = [[UIButton alloc]initWithFrame:CGRectMake(230.0, self.view.bounds.size.height * 0.02, 80.0, 30.0)];
+    [self.cancelSelectPageButton setTitle:@"取消本页" forState: UIControlStateNormal];
+    [self.cancelSelectPageButton.layer setCornerRadius:6.0f];
+    self.cancelSelectPageButton.showsTouchWhenHighlighted = YES;
+    self.cancelSelectPageButton.titleLabel.font =[UIFont fontWithName:@"Helvetica" size:20.0f];
+    self.cancelSelectPageButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.cancelSelectPageButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.cancelSelectPageButton addTarget:self action:@selector(cancelSelectPageButtonPressed:) forControlEvents:UIControlEventTouchDown];
+
+
+    
+    [self.view addSubview:self.selectAllButton];
+    [self.view addSubview:self.cancelSelectAllButton];
+    [self.view addSubview:self.selectPageButton];
+    [self.view addSubview:self.cancelSelectPageButton];
+
+
+    
+    self.view.backgroundColor = [UIColor colorWithRed:0.561 green:0.380 blue:0.201 alpha:1.000];
+
+}
+
+
 #pragma mark button delegate
+
+// 全部选择
+- (void)selectAllButtonPressed: (UIButton *)paramSender {
+    NSLog(@" Select ALL");
+    //[_tableView selectAll:_tableView];
+    
+    
+    NSInteger sectionCount = [_tableView.dataSource numberOfSectionsInTableView:_tableView];
+    for (int section=0; section < sectionCount; section++) {
+        NSInteger rowsCount = [_tableView numberOfRowsInSection:section];
+        for (int row = 0; row < rowsCount; row++) {
+            NSIndexPath *indexPath= [NSIndexPath indexPathForRow:row inSection:section];
+            [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+            if ([delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+                [delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            }
+        }
+    }
+    
+
+}
+
+// 全部不选
+- (void)cancelSelectAllButtonPressed: (UIButton *)paramSender {
+    NSLog(@" Cancel Select ALL");
+    
+    
+    NSInteger sectionCount = [_tableView.dataSource numberOfSectionsInTableView:_tableView];
+    for (int section=0; section < sectionCount; section++) {
+        NSInteger rowsCount = [_tableView numberOfRowsInSection:section];
+        for (int row = 0; row < rowsCount; row++) {
+            NSIndexPath *indexPath= [NSIndexPath indexPathForRow:row inSection:section];
+            [_tableView deselectRowAtIndexPath:indexPath animated:NO];
+            
+            if ([delegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)]) {
+                [delegate tableView:self.tableView didDeselectRowAtIndexPath:indexPath];
+            }
+            
+        }
+     
+    }
+}
+
+// 选中本页
+- (void) selectPageButtonPressed:(UIButton *)paramSender {
+    
+    NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
+    ///*
+    for (int i = 0; i < [anArrayOfIndexPath count]; i++) {
+        NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:i];
+     
+        [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+        if ([delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+            [delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        }
+     
+    
+     }
+    
+}
+
+// 取消本页
+- (void) cancelSelectPageButtonPressed: (UIButton *)paramSender {
+    
+     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView  indexPathsForVisibleRows]];
+     for (int i = 0; i < [anArrayOfIndexPath count]; i++) {
+         NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:i];
+     
+         [_tableView deselectRowAtIndexPath:indexPath animated:NO];
+     
+         if ([delegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)]) {
+             [delegate tableView:self.tableView didDeselectRowAtIndexPath:indexPath];
+         }
+     
+     
+     }
+    
+}
+
 - (void)addDetailPage:(id *)sender
 {
     EXPLineModelDetailViewController *detail =  [[EXPLineModelDetailViewController alloc]initWithNibName:nil bundle:nil];
@@ -239,7 +381,7 @@
     
 }
 
-#pragma tableview
+#pragma mark tableview
 
 -(UITableView *)tableView{
     
@@ -247,7 +389,7 @@
 
     _tableView = ({
         //UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height-64)];
+        UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0.0, 44.0, self.view.bounds.size.width, self.view.bounds.size.height-64-44)];
         
 //        tableView.backgroundColor = [UIColor colorWithRed:0.876 green:0.874 blue:0.760 alpha:1.0];
         tableView.backgroundColor = [UIColor whiteColor];

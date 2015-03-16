@@ -17,10 +17,16 @@
 
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-/* del by wuxiaocheng
-@property (weak, nonatomic) IBOutlet UILabel *sumLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sumMoneyLabel;
+//* del by wuxiaocheng
+@property (strong, nonatomic) IBOutlet UILabel *sumLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sumMoneyLabel;
+
+@property (strong, nonatomic)  UIButton *selectAllButton;
+@property (strong, nonatomic)  UIButton *cancelSelectAllButton;
+@property (strong, nonatomic)  UIButton *selectPageButton;
+@property (strong, nonatomic)  UIButton *cancelSelectPageButton;
+
  
-*/
+//*/
 
 @end
