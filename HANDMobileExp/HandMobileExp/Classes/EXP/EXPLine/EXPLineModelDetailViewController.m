@@ -29,10 +29,10 @@
     //cell 表单元
     LMTableDateFromToCell *dateCell;                // 日期
     
-    LMTableAmountInputCell *amountCell;             // 金额
+    LMTableAmountInputCell *amountCell;             // 总金额 
     LMTablePickerInputCell *expenseTypeCell;        // 费用类型
     LMTablePickerInputPlaceCell *placeCell;         // 地点
-    LMTableTextInputCell *numberCell;               // 数量
+    LMTableTextInputCell *numberCell;               // 数量 金额
     
     LMRateFieldCell  * rateCell;                    // 费率
     

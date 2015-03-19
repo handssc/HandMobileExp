@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MWPhotoBrowser.H"
+#import "MWPhotoBrowser.h"
 
 @interface MWPhotoBrowserWraper : NSObject
 

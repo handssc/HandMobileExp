@@ -26,7 +26,6 @@
 		B20D10A6196BDFA0004871F4 /* LMDataBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B20D10A5196BDFA0004871F4 /* LMDataBaseModel.m */; };
 		B20D10A9196BE121004871F4 /* FMDataBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B20D10A8196BE121004871F4 /* FMDataBaseModel.m */; };
 		B20D10AE196BE3CE004871F4 /* EXPLineModelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B20D10AD196BE3CE004871F4 /* EXPLineModelDetailViewController.m */; };
-		B218C4B11A031EA9003C85D7 /* MWPhotoBrowserWraper.m in Sources */ = {isa = PBXBuildFile; fileRef = B218C4B01A031EA9003C85D7 /* MWPhotoBrowserWraper.m */; };
 		B218C5FD1A03846A003C85D7 /* UINavigationController+SafePushing.m in Sources */ = {isa = PBXBuildFile; fileRef = B218C5FC1A03846A003C85D7 /* UINavigationController+SafePushing.m */; };
 		B21B2A511A024D380032F4B1 /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B21B2A501A024D380032F4B1 /* MWPhotoBrowser.bundle */; };
 		B21B2A541A024D560032F4B1 /* libMWPhotoBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B21B2A4F1A024D210032F4B1 /* libMWPhotoBrowser.a */; };
@@ -174,6 +173,7 @@
 		B2F98A5319A7287B0064032E /* 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F98A5019A7287B0064032E /* 2@2x.png */; };
 		B2F98A5419A7287B0064032E /* 3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F98A5119A7287B0064032E /* 3@2x.png */; };
 		B2F98A5819A732D50064032E /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F98A5719A732D50064032E /* loading.png */; };
+		D511E07C1AB94A070059D337 /* MWPhotoBrowserWraper.m in Sources */ = {isa = PBXBuildFile; fileRef = D511E07B1AB94A070059D337 /* MWPhotoBrowserWraper.m */; };
 		D5EC30B01AA04F18007C2603 /* LMTablePickerInputPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5EC30AE1AA04F18007C2603 /* LMTablePickerInputPlaceCell.m */; };
 		D5EC30B11AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5EC30AF1AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib */; };
 		D5EC30B41AA05089007C2603 /* UItextFieldControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D5EC30B31AA05089007C2603 /* UItextFieldControl.m */; };
@@ -337,8 +337,6 @@
 		B20D10A8196BE121004871F4 /* FMDataBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDataBaseModel.m; path = Frameworks/LittleMvc/FMDataBaseModel.m; sourceTree = "<group>"; };
 		B20D10AC196BE3CE004871F4 /* EXPLineModelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPLineModelDetailViewController.h; path = HandMobileExp/Classes/EXP/EXPLine/EXPLineModelDetailViewController.h; sourceTree = "<group>"; };
 		B20D10AD196BE3CE004871F4 /* EXPLineModelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPLineModelDetailViewController.m; path = HandMobileExp/Classes/EXP/EXPLine/EXPLineModelDetailViewController.m; sourceTree = "<group>"; };
-		B218C4AF1A031EA9003C85D7 /* MWPhotoBrowserWraper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWPhotoBrowserWraper.h; path = Frameworks/LittleMvc/MWPhotoBrowserWraper.h; sourceTree = "<group>"; };
-		B218C4B01A031EA9003C85D7 /* MWPhotoBrowserWraper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWPhotoBrowserWraper.m; path = Frameworks/LittleMvc/MWPhotoBrowserWraper.m; sourceTree = "<group>"; };
 		B218C5FB1A03846A003C85D7 /* UINavigationController+SafePushing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+SafePushing.h"; path = "Frameworks/LittleMvc/UINavigationController+SafePushing.h"; sourceTree = "<group>"; };
 		B218C5FC1A03846A003C85D7 /* UINavigationController+SafePushing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+SafePushing.m"; path = "Frameworks/LittleMvc/UINavigationController+SafePushing.m"; sourceTree = "<group>"; };
 		B21B2A4A1A024D210032F4B1 /* MWPhotoBrowser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MWPhotoBrowser.xcodeproj; path = Frameworks/MWPhotoBrowser/MWPhotoBrowser.xcodeproj; sourceTree = "<group>"; };
@@ -585,6 +583,8 @@
 		B2F98A5019A7287B0064032E /* 2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2@2x.png"; sourceTree = "<group>"; };
 		B2F98A5119A7287B0064032E /* 3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3@2x.png"; sourceTree = "<group>"; };
 		B2F98A5719A732D50064032E /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		D511E07A1AB94A070059D337 /* MWPhotoBrowserWraper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWPhotoBrowserWraper.h; path = Frameworks/LittleMvc/MWPhotoBrowserWraper.h; sourceTree = "<group>"; };
+		D511E07B1AB94A070059D337 /* MWPhotoBrowserWraper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWPhotoBrowserWraper.m; path = Frameworks/LittleMvc/MWPhotoBrowserWraper.m; sourceTree = "<group>"; };
 		D5EC30AD1AA04F18007C2603 /* LMTablePickerInputPlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LMTablePickerInputPlaceCell.h; path = Frameworks/LittleMvc/LMTablePickerInputPlaceCell.h; sourceTree = "<group>"; };
 		D5EC30AE1AA04F18007C2603 /* LMTablePickerInputPlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LMTablePickerInputPlaceCell.m; path = Frameworks/LittleMvc/LMTablePickerInputPlaceCell.m; sourceTree = "<group>"; };
 		D5EC30AF1AA04F18007C2603 /* LMTablePickerInputPlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LMTablePickerInputPlaceCell.xib; path = Frameworks/LittleMvc/LMTablePickerInputPlaceCell.xib; sourceTree = "<group>"; };
@@ -1058,12 +1058,12 @@
 		B2861F57197E4DC900C7F506 /* UiViewTool */ = {
 			isa = PBXGroup;
 			children = (
+				D511E07A1AB94A070059D337 /* MWPhotoBrowserWraper.h */,
+				D511E07B1AB94A070059D337 /* MWPhotoBrowserWraper.m */,
 				B2861F58197E4F4E00C7F506 /* LMAlertViewTool.h */,
 				B2861F59197E4F4E00C7F506 /* LMAlertViewTool.m */,
 				B25C27C3197FD1AF005E9878 /* LMSimpleProgress.h */,
 				B25C27C4197FD1AF005E9878 /* LMSimpleProgress.m */,
-				B218C4AF1A031EA9003C85D7 /* MWPhotoBrowserWraper.h */,
-				B218C4B01A031EA9003C85D7 /* MWPhotoBrowserWraper.m */,
 			);
 			name = UiViewTool;
 			sourceTree = "<group>";
@@ -1943,6 +1943,7 @@
 				DA83CB2B198635EE00BBBEA0 /* LMDetailListTableViewCell.m in Sources */,
 				B269E5181972F209001313DD /* LMCellStype.m in Sources */,
 				D5EC30B41AA05089007C2603 /* UItextFieldControl.m in Sources */,
+				D511E07C1AB94A070059D337 /* MWPhotoBrowserWraper.m in Sources */,
 				B29D960E196649F40017A9B7 /* RECommonFunctions.m in Sources */,
 				B2A2D94A19654A7D00B2C935 /* LMRequestModel.m in Sources */,
 				B2A2D96C1965889300B2C935 /* MMProgressHUDViewController.m in Sources */,
@@ -1973,7 +1974,6 @@
 				B2D6D684197CDB2600FE234C /* EXPLocationPicker.m in Sources */,
 				B2C556811968288E00B14460 /* LMTableImageItemCellTableViewCell.m in Sources */,
 				DAF3C224197FD626004145B2 /* EXPHomeModel.m in Sources */,
-				B218C4B11A031EA9003C85D7 /* MWPhotoBrowserWraper.m in Sources */,
 				B2B83E4419CAB90A0098631D /* EXPBuildWebView.m in Sources */,
 				B2C41C52196EB182007C62BB /* LMTablePickerInputCell.m in Sources */,
 			);
@@ -2145,7 +2145,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HandMobileExp/HandMobileExp-Prefix.pch";
@@ -2161,7 +2160,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "Frameworks/kal Frameworks/MWPhotoBrowser";
+				USER_HEADER_SEARCH_PATHS = "Frameworks/kal Frameworks/MWPhotoBrowser/Classes";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -69,7 +69,7 @@
 
 - (void)amountTextFieldDoneEditing:(id)sender {
     self.amountValue = [_amountTextField.text doubleValue];
-    _amountTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.amountValue]];
+    //_amountTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.amountValue]];
     NSLog(@"amout: %f", self.amountValue);
     NSLog(@"number: %f", self.numberValue);
     self.modifiedFlag = YES;
@@ -81,9 +81,8 @@
 
 - (void)numberTextFieldDoneEditing:(id)sender {
     self.numberValue = [_numberTextField.text doubleValue];
-    _numberTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
+    //_numberTextField.text = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:self.numberValue]];
     NSLog(@"amout: %f", self.amountValue);
-
     NSLog(@"number: %f", self.numberValue);
     self.modifiedFlag = YES;
     //NSLog(@"numberCell modifiedFlag %@", _modifiedFlag?@"YES":@"NO");

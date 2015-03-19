@@ -33,8 +33,6 @@
     //
     BOOL httpFaild;
     
-
-    
     
 }
 
@@ -138,8 +136,8 @@
 
     
     // Button cancelSelectAll
-    self.cancelSelectAllButton = [[UIButton alloc]initWithFrame:CGRectMake(70.0, self.view.bounds.size.height * 0.02, 70.0, 30.0)];
-    [self.cancelSelectAllButton setTitle:@"全不选" forState: UIControlStateNormal];
+    self.cancelSelectAllButton = [[UIButton alloc]initWithFrame:CGRectMake(70.0, self.view.bounds.size.height * 0.02, 80.0, 30.0)];
+    [self.cancelSelectAllButton setTitle:@"全部取消" forState: UIControlStateNormal];
     [self.cancelSelectAllButton.layer setCornerRadius:6.0f];
     self.cancelSelectAllButton.showsTouchWhenHighlighted = YES;
     self.cancelSelectAllButton.titleLabel.font =[UIFont fontWithName:@"Helvetica" size:20.0f];
@@ -159,7 +157,7 @@
     
     //Button cancelSelectPageButton
     self.cancelSelectPageButton = [[UIButton alloc]initWithFrame:CGRectMake(230.0, self.view.bounds.size.height * 0.02, 80.0, 30.0)];
-    [self.cancelSelectPageButton setTitle:@"取消本页" forState: UIControlStateNormal];
+    [self.cancelSelectPageButton setTitle:@"本页取消" forState: UIControlStateNormal];
     [self.cancelSelectPageButton.layer setCornerRadius:6.0f];
     self.cancelSelectPageButton.showsTouchWhenHighlighted = YES;
     self.cancelSelectPageButton.titleLabel.font =[UIFont fontWithName:@"Helvetica" size:20.0f];
