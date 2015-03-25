@@ -171,7 +171,7 @@
                 
                 // 计算单项总额
                 cellitem.amount = [[record valueForKey:@"total_amount"] doubleValue];
-                NSLog(@"total item: %f , %f", [[record valueForKey:@"expense_amount"] doubleValue], [[record valueForKey:@"total_amount"] doubleValue]);
+                //NSLog(@"total item: %f , %f", [[record valueForKey:@"expense_amount"] doubleValue], [[record valueForKey:@"total_amount"] doubleValue]);
                // cellitem.amount = [[record valueForKey:@"expense_amount"] floatValue]
                 //*[[record valueForKey:@"expense_number"] integerValue];
                 

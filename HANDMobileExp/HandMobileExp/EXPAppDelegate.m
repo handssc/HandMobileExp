@@ -14,7 +14,7 @@
 
 #import "EXPUnlockSettingViewController.h"
 
-        @implementation EXPAppDelegate
+@implementation EXPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

@@ -183,7 +183,7 @@
 
 // 全部选择
 - (void)selectAllButtonPressed: (UIButton *)paramSender {
-    NSLog(@" Select ALL");
+    //NSLog(@" Select ALL");
     //[_tableView selectAll:_tableView];
     
     
@@ -204,7 +204,7 @@
 
 // 全部不选
 - (void)cancelSelectAllButtonPressed: (UIButton *)paramSender {
-    NSLog(@" Cancel Select ALL");
+    //NSLog(@" Cancel Select ALL");
     
     
     NSInteger sectionCount = [_tableView.dataSource numberOfSectionsInTableView:_tableView];
