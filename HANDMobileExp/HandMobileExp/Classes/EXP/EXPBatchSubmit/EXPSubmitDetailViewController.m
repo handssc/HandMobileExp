@@ -33,6 +33,8 @@
     //
     BOOL httpFaild;
     
+    BOOL uploadLock;    //上传锁
+    
     
 }
 
@@ -60,6 +62,8 @@
         
         selectRecord = 0;
         httpFaild = NO;
+        uploadLock = NO;
+        
         
         // 上传
         UIImage *checkList = [UIImage imageNamed:@"submit"];
@@ -279,103 +283,108 @@
     EXPSubmitDetailDataSource  * datasource = self.dataSource;
     FMDataBaseModel * model = datasource.model;
     
-    
-    
-    for ( NSNumber * key    in  delegate.selectIndex){
-        
-        for (  NSDictionary * record in  model.result){
+    if (uploadLock == NO) {
+        uploadLock = YES;
+       
+        for ( NSNumber * key    in  delegate.selectIndex){
             
-            NSNumber * recordId =  [record valueForKey:@"id"];
-            
-            if([recordId integerValue] == [key integerValue]){
+            for (  NSDictionary * record in  model.result){
                 
-                NSNumber * expense_amount=  [record valueForKey:@"expense_amount"];
-                NSString *  expenseAmount = [NSString stringWithFormat:@"%.2f",[expense_amount floatValue]];
-                NSNumber  * exchange_rate = [record valueForKey:@"exchangeRate"];
+                NSNumber * recordId =  [record valueForKey:@"id"];
                 
-                 NSString *  exchangeRate = [NSString stringWithFormat:@"%.2f",[exchange_rate floatValue]];
-                
-                NSString* currency = [NSString stringWithFormat:@"%@",[record valueForKey:@"currency"] ];
-                
-                NSString* currency_code = [currency substringToIndex:3];
-                NSString* currency_name = nil;
-                if (currency.length < 5) {
-                    currency_name = @"人民币";
-                }
-                else {
-                    currency_name = [currency substringFromIndex:4];
-
-                }
-                NSLog(@"%@, %@", currency_code,currency_name);
-                
-                NSDictionary * param = @{
-                                         @"expense_amount" : expenseAmount,
-                                         @"expense_number" : [record valueForKey:@"expense_number"],
-                                         @"expense_place" :[record valueForKey:@"expense_place"],
-                                         @"expense_class_id" : [record valueForKey:@"expense_class_id"],
-                                         @"expense_type_id"    : [record valueForKey:@"expense_type_id"] ,
-                                         @"expense_date"    : [record valueForKey:@"expense_date"],
-                                         @"expense_date_to"    : [record valueForKey:@"expense_date_to"],
-                                         @"description" : [record valueForKey:@"description"],
-                                         @"local_id" : [record valueForKey:@"id"],
-                                         @"currency_code" : currency_code,
-                                         @"currency_name" : currency_name,
-                                         @"exchange_rate" : exchangeRate
-                                         
-                                         
-                                         };
-                
-                
-                
-                selectRecord++;
-                
-                NSData * data =    [record valueForKey:@"item1"];
-                if( data.length !=0){
-//                    [httpmodel upload:param fileName:@"upload.jpg" data:data];
-                    NSMutableArray * files = [[NSMutableArray alloc] init];
+                if([recordId integerValue] == [key integerValue]){
                     
-                    for(int i = 0;i< 9;i++){
-                        NSString * keyItem = @"item";
-                        NSString * mimeType =  @"image/jpeg";
-                        keyItem = [keyItem stringByAppendingFormat:@"%d",i+1];
-                        NSData * data = [record valueForKey:keyItem];
-                        if(data !=nil && data.length !=0){
-                            NSString * fileName =@"upload";
-                            fileName =   [fileName stringByAppendingFormat:@"%d.jpg",i];
-                            
-                            NSDictionary * file = @{@"mimeType": mimeType,
-                                                    @"filename" :fileName,
-                                                    @"filedata" :data
-                                                    
-                                                    
-                                                    };
-                            
-                            [files addObject:file];
-                            
-                           
+                    NSNumber * expense_amount=  [record valueForKey:@"expense_amount"];
+                    NSString *  expenseAmount = [NSString stringWithFormat:@"%.2f",[expense_amount floatValue]];
+                    NSNumber  * exchange_rate = [record valueForKey:@"exchangeRate"];
+                    
+                    NSString *  exchangeRate = [NSString stringWithFormat:@"%.2f",[exchange_rate floatValue]];
+                    
+                    NSString* currency = [NSString stringWithFormat:@"%@",[record valueForKey:@"currency"] ];
+                    
+                    NSString* currency_code = [currency substringToIndex:3];
+                    NSString* currency_name = nil;
+                    if (currency.length < 5) {
+                        currency_name = @"人民币";
+                    }
+                    else {
+                        currency_name = [currency substringFromIndex:4];
+                        
+                    }
+                    NSLog(@"%@, %@", currency_code,currency_name);
+                    
+                    NSDictionary * param = @{
+                                             @"expense_amount" : expenseAmount,
+                                             @"expense_number" : [record valueForKey:@"expense_number"],
+                                             @"expense_place" :[record valueForKey:@"expense_place"],
+                                             @"expense_class_id" : [record valueForKey:@"expense_class_id"],
+                                             @"expense_type_id"    : [record valueForKey:@"expense_type_id"] ,
+                                             @"expense_date"    : [record valueForKey:@"expense_date"],
+                                             @"expense_date_to"    : [record valueForKey:@"expense_date_to"],
+                                             @"description" : [record valueForKey:@"description"],
+                                             @"local_id" : [record valueForKey:@"id"],
+                                             @"currency_code" : currency_code,
+                                             @"currency_name" : currency_name,
+                                             @"exchange_rate" : exchangeRate
+                                             
+                                             
+                                             };
+                    
+                    
+                    
+                    selectRecord++;
+                    
+                    NSData * data =    [record valueForKey:@"item1"];
+                    if( data.length !=0){
+                        //                    [httpmodel upload:param fileName:@"upload.jpg" data:data];
+                        NSMutableArray * files = [[NSMutableArray alloc] init];
+                        
+                        for(int i = 0;i< 9;i++){
+                            NSString * keyItem = @"item";
+                            NSString * mimeType =  @"image/jpeg";
+                            keyItem = [keyItem stringByAppendingFormat:@"%d",i+1];
+                            NSData * data = [record valueForKey:keyItem];
+                            if(data !=nil && data.length !=0){
+                                NSString * fileName =@"upload";
+                                fileName =   [fileName stringByAppendingFormat:@"%d.jpg",i];
+                                
+                                NSDictionary * file = @{@"mimeType": mimeType,
+                                                        @"filename" :fileName,
+                                                        @"filedata" :data
+                                                        
+                                                        
+                                                        };
+                                
+                                [files addObject:file];
+                                
+                                
+                                
+                            }
                             
                         }
-                    
+                        
+                        [httpmodel upload:param files:files];
+                        
+                        
+                    }else{
+                        [httpmodel upload:param];
+                        
                     }
                     
-                    [httpmodel upload:param files:files];
                     
-                    
-                }else{
-                    [httpmodel upload:param];
                     
                 }
-                
-            
-                
-                
                 
             }
             
+            
         }
+
+            
         
         
     }
+    
     
 }
 
@@ -424,6 +433,7 @@
         [datamodel load:0 more:0];
         
         [MMProgressHUD showWithTitle:nil status:@"upload"];
+       // updateLock = YES;
         
     }
     
@@ -461,11 +471,11 @@
                 NSArray * records = @[param];
                 [datamodel update:records];
         
-            }else if ([result isEqualToString:@"failure"]){
+        }else if ([result isEqualToString:@"failure"]){
                 
                 
             
-            }
+        }
 
                     
 
@@ -484,6 +494,7 @@
                         [delegate.selectIndex removeAllObjects];
             
             [MMProgressHUD dismiss];
+            uploadLock = NO;
             [self reload];
         //选中标记为0，而且网络请求失败过
         }else if(selectRecord == 0 && httpFaild){
@@ -493,6 +504,8 @@
                         [delegate.selectIndex removeAllObjects];
             
             [MMProgressHUD dismiss];
+            uploadLock = NO;
+
             [self reload];
         }
         
@@ -522,6 +535,7 @@
                 //重置标志位
                 httpFaild = NO;
                 selectRecord = 0;
+                uploadLock = NO;
             [LMAlertViewTool showAlertView:@"提示" message:@"网络出现问题，请检查网络后重新提交" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             }
     
